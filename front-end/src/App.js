@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 
-
 import Sidebar from "./components/dashboard/sidebar";
 import Main from "./components/login/Main";
 
@@ -10,10 +9,9 @@ function App() {
   return (
     <div className="App">
       <Router>
-//         <Main />
-        <Sidebar />
+        <Main />
+        {/* <Sidebar /> */}
       </Router>
-
     </div>
   );
 }
