@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import CurrencyInput from 'react-currency-input';
+
 
 class SignUpForm extends Component {
     constructor() {
@@ -47,6 +49,10 @@ class SignUpForm extends Component {
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
+                <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="Currency">Currency</label>
                 <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
               </div>
 
