@@ -12,9 +12,9 @@ app.get("/all", (req, res) => {
   });
 });
 
-app.post("/add", (req, res) => {
-  let repo = req.body;
-  mongo.postRepo(repo, result => {
+app.post("/signUp", (req, res) => {
+  let user = req.body;
+  mongo.addUser(user, result => {
     res.json(result);
   });
 });
