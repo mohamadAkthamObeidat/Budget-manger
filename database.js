@@ -25,3 +25,11 @@ let moneySchema = new mongoose.Schema({
 });
 
 let money = mongoose.model("money", moneySchema);
+
+let addUser = (user, cb) => {
+  money.insertOne(user, function(error, docs) {});
+};
+
+module.exports = {
+  addUser
+};
