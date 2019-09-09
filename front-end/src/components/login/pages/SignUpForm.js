@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+
 class SignUpForm extends Component {
     constructor() {
         super();
@@ -9,6 +10,8 @@ class SignUpForm extends Component {
             email: '',
             password: '',
             name: '',
+            income:0,
+            Currency:'',
             hasAgreed: false
         };
 
@@ -48,6 +51,15 @@ class SignUpForm extends Component {
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
                 <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="number">Your Monthly Income</label>
+                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="income" value={this.state.number} onChange={this.handleChange} />
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="Currency">Currency</label>
+                <input type="radio"   className="Currency" value="USD" onChange={this.handleChange} name = "Currency"/>USD
+                <input type="radio"   className="Currency" value="JOD" onChange={this.handleChange} name = "Currency"/>JOD
               </div>
 
               <div className="FormField">
