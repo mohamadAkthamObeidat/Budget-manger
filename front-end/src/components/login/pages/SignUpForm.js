@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 
 class SignUpForm extends Component {
@@ -31,11 +32,14 @@ class SignUpForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+    Axios.post('/signUp', this.state).then (response => {
+      console.log('shaker')
 
         console.log('The form was submitted with the following data:');
         console.log(this.state);
-    }
-
+    })
+  }
+    
     render() {
         return (
         <div className="FormCenter">
