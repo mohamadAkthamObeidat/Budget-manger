@@ -1,0 +1,28 @@
+{
+  "name": "budget-manger",
+  "version": "1.0.0",
+  "description": "project#5",
+  "main": "database.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "react": "cd ./front-end && npm start ",
+    "heroku-postbuild": "cd front-end && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Project-5-OMSE/Budget-manger.git"
+  },
+  "author": "Orayb, Shaker, 3bedat, 3mad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Project-5-OMSE/Budget-manger/issues"
+  },
+  "homepage": "https://github.com/Project-5-OMSE/Budget-manger#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.2"
+  }
+}
