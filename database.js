@@ -18,8 +18,10 @@ db.once("open", function() {
 
 let moneySchema = new mongoose.Schema({
   name: String,
-  state: Boolean,
-  language: String
+  Email: String,
+  password: String,
+  income: Number,
+  currency: String
 });
 
 let money = mongoose.model("money", moneySchema);
