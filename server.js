@@ -13,7 +13,8 @@ app.get("/all", (req, res) => {
 });
 
 app.post("/signUp", (req, res) => {
-  let user = req.body;
+  const user = req.body;
+  console.log('user', user)
   mongo.addUser(user, result => {
     res.json(result);
   });

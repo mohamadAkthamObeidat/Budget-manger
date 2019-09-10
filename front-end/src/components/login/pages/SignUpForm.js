@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
+import axios from 'axios';
 
 
 class SignUpForm extends Component {
@@ -12,7 +12,8 @@ class SignUpForm extends Component {
             password: '',
             name: '',
             income:0,
-            Currency:'',
+            saving:0,
+            currency:'',
             hasAgreed: false
         };
 
@@ -27,16 +28,17 @@ class SignUpForm extends Component {
 
         this.setState({
           [name]: value
+
         });
     }
 
     handleSubmit(e) {
         e.preventDefault();
-    Axios.post('/signUp', this.state).then (response => {
-      console.log('shaker')
+      console.log('Submit',this.state)
 
-        console.log('The form was submitted with the following data:');
-        console.log(this.state);
+    axios.post('/signUp', this.state)
+    .then (response => {
+      console.log('Res:',response.data)
     })
   }
     
@@ -46,29 +48,33 @@ class SignUpForm extends Component {
             <form onSubmit={this.handleSubmit} className="FormFields">
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="name">Full Name</label>
-                <input type="text" id="name" className="FormField__Input" placeholder="Enter your full name" name="name" value={this.state.name} onChange={this.handleChange} />
+                <input type="text" id="name" className="FormField__Input" placeholder="Enter your full name" name="name" value={this.state.name} onChange={this.handleChange} required/>
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="password">Password</label>
-                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
+                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange}required />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
+                <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange}required />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="number">Your Monthly Income</label>
-                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="income" value={this.state.number} onChange={this.handleChange} />
+                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="income" value={this.state.income} onChange={this.handleChange}required />
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="number">Your Monthly Saving</label>
+                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="saving" value={this.state.saving} onChange={this.handleChange}required />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="Currency">Currency</label>
-                <input type="radio"   className="Currency" value="USD" onChange={this.handleChange} name = "Currency"/>USD
-                <input type="radio"   className="Currency" value="JOD" onChange={this.handleChange} name = "Currency"/>JOD
+                <input type="radio"   className="Currency" value="USD" onChange={this.handleChange} name = "currency"/>USD
+                <input type="radio"   className="Currency" value="JOD" onChange={this.handleChange} checked name = "currency"/>JOD 
               </div>
 
               <div className="FormField">
                 <label className="FormField__CheckboxLabel">
-                    <input className="FormField__Checkbox" type="checkbox" name="hasAgreed" value={this.state.hasAgreed} onChange={this.handleChange} /> I agree all statements in <a href="" className="FormField__TermsLink">terms of service</a>
+                    <input className="FormField__Checkbox" type="checkbox" name="hasAgreed" value={this.state.hasAgreed} onChange={this.handleChange}required /> I agree all statements in <a href="" className="FormField__TermsLink">terms of service</a>
                 </label>
               </div>
 
