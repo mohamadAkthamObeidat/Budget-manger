@@ -133,7 +133,6 @@ class SignUpForm extends Component {
               className="Currency"
               value="JOD"
               onChange={this.handleChange}
-              checked
               name="currency"
             />
             JOD
@@ -148,22 +147,6 @@ class SignUpForm extends Component {
                 value={this.state.hasAgreed}
                 onChange={this.handleChange}
                 required
-              />{" "}
-              I agree all statements in{" "}
-              <a href="" className="FormField__TermsLink">
-                terms of service
-              </a>
-            </label>
-          </div>
-
-          <div className="FormField">
-            <label className="FormField__CheckboxLabel">
-              <input
-                className="FormField__Checkbox"
-                type="checkbox"
-                name="hasAgreed"
-                value={this.state.hasAgreed}
-                onChange={this.handleChange}
               />{" "}
               I agree all statements in{" "}
               <a href="" className="FormField__TermsLink">
