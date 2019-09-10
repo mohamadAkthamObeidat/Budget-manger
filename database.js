@@ -27,8 +27,20 @@ let moneySchema = new mongoose.Schema({
 
 let money = mongoose.model("money", moneySchema);
 
+let getusers = async cb => {
+  try {
+    // console.log("1");
+    let allUsers = await money.find({});
+    // console.log("2");
+    cb(allUsers);
+    // console.log("3");
+  } catch (error) {
+    cb(error);
+  }
+};
+
 let addUser = (user, cb) => {
-  console.log('user', user)
+  console.log("user", user);
   money.create(user, (err, data) => {
     if (err) {
       cb(err);
@@ -55,5 +67,9 @@ let signIn = (userSignIn, cb) => {
 
 module.exports = {
   addUser,
-  signIn
+
+  signIn,
+
+  getusers
+
 };

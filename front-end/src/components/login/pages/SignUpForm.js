@@ -1,46 +1,44 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class SignUpForm extends Component {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.state = {
-            email: '',
-            password: '',
-            name: '',
-            income:0,
-            saving:0,
-            currency:'',
-            hasAgreed: false
-        };
+    this.state = {
+      email: "",
+      password: "",
+      name: "",
+      income: 0,
+      saving: 0,
+      currency: "",
+      hasAgreed: false
+    };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(e) {
-        let target = e.target;
-        let value = target.type === 'checkbox' ? target.checked : target.value;
-        let name = target.name;
-
-        this.setState({
-          [name]: value
-
-        });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-      console.log('Submit',this.state)
-
-    axios.post('/signUp', this.state)
-    .then (response => {
-      console.log('Res:',response.data)
-    })
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  handleChange(e) {
+    let target = e.target;
+    let value = target.type === "checkbox" ? target.checked : target.value;
+    let name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log("Submit", this.state);
+
+    axios.post("/signUp", this.state).then(response => {
+      console.log("Res:", response.data);
+    });
+  }
+
     
     render() {
         return (
@@ -72,19 +70,6 @@ class SignUpForm extends Component {
                 <input type="radio"   className="Currency" value="JOD" onChange={this.handleChange} checked name = "currency"/>JOD 
               </div>
 
-              <div className="FormField">
-                <label className="FormField__CheckboxLabel">
-                    <input className="FormField__Checkbox" type="checkbox" name="hasAgreed" value={this.state.hasAgreed} onChange={this.handleChange}required /> I agree all statements in <a href="" className="FormField__TermsLink">terms of service</a>
-                </label>
-              </div>
-
-              <div className="FormField">
-                  <button className="FormField__Button mr-20">Sign Up</button> <Link to="/sign-in" className="FormField__Link">I'm already member</Link>
-              </div>
-            </form>
-          </div>
-        );
-    }
-}
+ 
 
 export default SignUpForm;

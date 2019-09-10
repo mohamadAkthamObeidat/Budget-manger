@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../Style/Dashboard.css";
+import "../../Style/SideBar.css";
 
 const Sidebar = () => {
   return (
@@ -18,6 +18,17 @@ const Sidebar = () => {
         </Link>
       </li>
       <li className="items">
+        <Link to="/account-statement">
+          {" "}
+          <img
+            className="icons"
+            src={require("../../Assets/accounting.svg")}
+            alt=""
+          />
+          <span className="nav-item-txt">Account statement</span>
+        </Link>
+      </li>
+      <li className="items">
         <Link to="/settings">
           {" "}
           <img
@@ -28,6 +39,7 @@ const Sidebar = () => {
           <span className="nav-item-txt">Settings</span>
         </Link>
       </li>
+
       <li className="logout">
         <Link to="/login">
           <span className="nav-item-txt">LOGOUT>></span>
