@@ -39,149 +39,37 @@ class SignUpForm extends Component {
     });
   }
 
-  render() {
-    return (
-      <div className="FormCenter">
-        <form onSubmit={this.handleSubmit} className="FormFields">
-          <div className="FormField">
-            <label className="FormField__Label" htmlFor="name">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="FormField__Input"
-              placeholder="Enter your full name"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-              required
-            />
-          </div>
-          <div className="FormField">
-            <label className="FormField__Label" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="FormField__Input"
-              placeholder="Enter your password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              required
-            />
-          </div>
-          <div className="FormField">
-            <label className="FormField__Label" htmlFor="email">
-              E-Mail Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="FormField__Input"
-              placeholder="Enter your email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-              required
-            />
-          </div>
-          <div className="FormField">
-            <label className="FormField__Label" htmlFor="number">
-              Your Monthly Income
-            </label>
-            <input
-              type="number"
-              className="FormField__Input"
-              placeholder="Enter your Monthly Income"
-              name="income"
-              value={this.state.income}
-              onChange={this.handleChange}
-              required
-            />
-          </div>
-          <div className="FormField">
-            <label className="FormField__Label" htmlFor="number">
-              Your Monthly Saving
-            </label>
-            <input
-              type="number"
-              className="FormField__Input"
-              placeholder="Enter your Monthly Income"
-              name="saving"
-              value={this.state.saving}
-              onChange={this.handleChange}
-              required
-            />
-          </div>
-          <div className="FormField">
-            <label className="FormField__Label" htmlFor="Currency">
-              Currency
-            </label>
-            <input
-              type="radio"
-              className="Currency"
-              value="USD"
-              onChange={this.handleChange}
-              name="currency"
-            />
-            USD
-            <input
-              type="radio"
-              className="Currency"
-              value="JOD"
-              onChange={this.handleChange}
-              checked
-              name="currency"
-            />
-            JOD
-          </div>
+    
+    render() {
+        return (
+        <div className="FormCenter">
+            <form onSubmit={this.handleSubmit} className="FormFields">
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="name">Full Name</label>
+                <input type="text" id="name" className="FormField__Input" placeholder="Enter your full name" name="name" value={this.state.name} onChange={this.handleChange} required/>
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="password">Password</label>
+                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange}required />
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
+                <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange}required />
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="number">Your Monthly Income</label>
+                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="income" value={this.state.income} onChange={this.handleChange}required  min = "50"/>
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="number">Your Monthly Saving</label>
+                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="saving" value={this.state.saving} onChange={this.handleChange}required max = {this.state.income*0.20} />
+              </div>
+              <div className="FormField">
+                <label className="FormField__Label" htmlFor="Currency">Currency</label>
+                <input type="radio"   className="Currency" value="USD" onChange={this.handleChange} name = "currency"/>USD
+                <input type="radio"   className="Currency" value="JOD" onChange={this.handleChange} checked name = "currency"/>JOD 
+              </div>
 
-          <div className="FormField">
-            <label className="FormField__CheckboxLabel">
-              <input
-                className="FormField__Checkbox"
-                type="checkbox"
-                name="hasAgreed"
-                value={this.state.hasAgreed}
-                onChange={this.handleChange}
-                required
-              />{" "}
-              I agree all statements in{" "}
-              <a href="" className="FormField__TermsLink">
-                terms of service
-              </a>
-            </label>
-          </div>
-
-          <div className="FormField">
-            <label className="FormField__CheckboxLabel">
-              <input
-                className="FormField__Checkbox"
-                type="checkbox"
-                name="hasAgreed"
-                value={this.state.hasAgreed}
-                onChange={this.handleChange}
-              />{" "}
-              I agree all statements in{" "}
-              <a href="" className="FormField__TermsLink">
-                terms of service
-              </a>
-            </label>
-          </div>
-
-          <div className="FormField">
-            <button className="FormField__Button mr-20">Sign Up</button>{" "}
-            <Link to="/sign-in" className="FormField__Link">
-              I'm already member
-            </Link>
-          </div>
-        </form>
-      </div>
-    );
-  }
-}
+ 
 
 export default SignUpForm;
