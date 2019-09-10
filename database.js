@@ -18,18 +18,33 @@ db.once("open", function() {
 
 let moneySchema = new mongoose.Schema({
   name: String,
-  Email: String,
   password: String,
   income: Number,
-  currency: String
+  currency: String,
+  hasAgreed: Boolean
 });
 
 let money = mongoose.model("money", moneySchema);
 
+let getusers = async cb => {
+  try {
+    // console.log("1");
+    let allUsers = await money.find({});
+    // console.log("2");
+    cb(allUsers);
+    // console.log("3");
+  } catch (error) {
+    cb(error);
+  }
+};
+
 let addUser = (user, cb) => {
-  money.insertOne(user, function(error, docs) {});
+  console.log(user);
+  money.insertMany(user, function(error, docs) {});
+  getusers(cb);
 };
 
 module.exports = {
-  addUser
+  addUser,
+  getusers
 };
