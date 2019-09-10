@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="689" height="485.076" viewBox="0 0 689 485.076">
+  <g id="No_Transiction" data-name="No Transiction" transform="translate(-848 -331.924)" opacity="0.22">
+    <path id="Path_228" data-name="Path 228" d="M60.045,285.213,30.195,326.224A18.161,18.161,0,0,0,59.561,347.6l30.087-41.336a140.3,140.3,0,0,0,66.2,16.524c77.867,0,141.215-63.351,141.215-141.22A140.793,140.793,0,0,0,254.12,80.292l37.45-51.45A18.156,18.156,0,1,0,262.214,7.47l-37.172,51.07a140.266,140.266,0,0,0-69.206-18.194c-77.87,0-141.22,63.351-141.22,141.218A140.826,140.826,0,0,0,60.045,285.213Zm200.7-103.648a104.67,104.67,0,0,1-149.392,94.873L232.413,110.1A104.385,104.385,0,0,1,260.741,181.565ZM155.835,76.662a104.108,104.108,0,0,1,47.6,11.543L81.59,255.609A104.849,104.849,0,0,1,155.835,76.662Z" transform="translate(1037.006 331.926)" fill="#00900b"/>
+    <text id="There_are_no_transactions_yet" data-name="There are no transactions yet" transform="translate(848 805)" fill="#00900b" font-size="52" font-family="TrebuchetMS, Trebuchet MS"><tspan x="0" y="0">There are no transactions yet</tspan></text>
+  </g>
+</svg>
