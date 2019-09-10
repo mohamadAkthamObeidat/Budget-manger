@@ -18,10 +18,11 @@ db.once("open", function() {
 
 let moneySchema = new mongoose.Schema({
   name: String,
+  email: String,
   password: String,
   income: Number,
-  currency: String,
-  hasAgreed: Boolean
+  saving: Number,
+  currency: String
 });
 
 let money = mongoose.model("money", moneySchema);
@@ -39,9 +40,14 @@ let getusers = async cb => {
 };
 
 let addUser = (user, cb) => {
-  console.log(user);
-  money.insertMany(user, function(error, docs) {});
-  getusers(cb);
+  console.log("user", user);
+  money.create(user, (err, data) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(data);
+    }
+  });
 };
 
 module.exports = {

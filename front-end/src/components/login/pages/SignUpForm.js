@@ -11,7 +11,8 @@ class SignUpForm extends Component {
       password: "",
       name: "",
       income: 0,
-      Currency: "",
+      saving: 0,
+      currency: "",
       hasAgreed: false
     };
 
@@ -31,15 +32,11 @@ class SignUpForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    axios
-      .post("/signUp", this.state)
-      .then(response => {
-        console.log("shaker");
+    console.log("Submit", this.state);
 
-        console.log("The form was submitted with the following data:");
-        console.log(this.state);
-      })
-      .catch(error => console.log(error));
+    axios.post("/signUp", this.state).then(response => {
+      console.log("Res:", response.data);
+    });
   }
 
   render() {
@@ -58,6 +55,7 @@ class SignUpForm extends Component {
               name="name"
               value={this.state.name}
               onChange={this.handleChange}
+              required
             />
           </div>
           <div className="FormField">
@@ -72,6 +70,7 @@ class SignUpForm extends Component {
               name="password"
               value={this.state.password}
               onChange={this.handleChange}
+              required
             />
           </div>
           <div className="FormField">
@@ -86,6 +85,7 @@ class SignUpForm extends Component {
               name="email"
               value={this.state.email}
               onChange={this.handleChange}
+              required
             />
           </div>
           <div className="FormField">
@@ -97,8 +97,23 @@ class SignUpForm extends Component {
               className="FormField__Input"
               placeholder="Enter your Monthly Income"
               name="income"
-              value={this.state.number}
+              value={this.state.income}
               onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="FormField">
+            <label className="FormField__Label" htmlFor="number">
+              Your Monthly Saving
+            </label>
+            <input
+              type="number"
+              className="FormField__Input"
+              placeholder="Enter your Monthly Income"
+              name="saving"
+              value={this.state.saving}
+              onChange={this.handleChange}
+              required
             />
           </div>
           <div className="FormField">
@@ -110,7 +125,7 @@ class SignUpForm extends Component {
               className="Currency"
               value="USD"
               onChange={this.handleChange}
-              name="Currency"
+              name="currency"
             />
             USD
             <input
@@ -118,9 +133,27 @@ class SignUpForm extends Component {
               className="Currency"
               value="JOD"
               onChange={this.handleChange}
-              name="Currency"
+              checked
+              name="currency"
             />
             JOD
+          </div>
+
+          <div className="FormField">
+            <label className="FormField__CheckboxLabel">
+              <input
+                className="FormField__Checkbox"
+                type="checkbox"
+                name="hasAgreed"
+                value={this.state.hasAgreed}
+                onChange={this.handleChange}
+                required
+              />{" "}
+              I agree all statements in{" "}
+              <a href="" className="FormField__TermsLink">
+                terms of service
+              </a>
+            </label>
           </div>
 
           <div className="FormField">
