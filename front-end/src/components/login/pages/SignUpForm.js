@@ -60,11 +60,11 @@ class SignUpForm extends Component {
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="number">Your Monthly Income</label>
-                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="income" value={this.state.income} onChange={this.handleChange}required />
+                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="income" value={this.state.income} onChange={this.handleChange}required  min = "50"/>
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="number">Your Monthly Saving</label>
-                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="saving" value={this.state.saving} onChange={this.handleChange}required />
+                <input type="number" className="FormField__Input"  placeholder="Enter your Monthly Income" name="saving" value={this.state.saving} onChange={this.handleChange}required max = {this.state.income*0.20} />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="Currency">Currency</label>

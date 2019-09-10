@@ -19,6 +19,15 @@ app.post("/signUp", (req, res) => {
     res.json(result);
   });
 });
+app.post("/ss", (req, res) => {
+  const userSignIn = req.body;
+  console.log('shakeruser', userSignIn)
+  mongo.signIn(userSignIn, result => {
+    if (result.length <1)
+      res.json('password and email does not match');
+    res.json(result);
+  });
+});
 
 app.put("/update/:id", (req, res) => {
   let repo = req.params.id;

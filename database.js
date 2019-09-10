@@ -38,6 +38,22 @@ let addUser = (user, cb) => {
   });
 };
 
+let signIn = (userSignIn, cb) => {
+
+  console.log('user', userSignIn)
+  money.find(userSignIn , (err, data) => {
+    console.log('data', data)
+    if (err) {
+      cb(err);
+    } else {
+      console.log('DATA', data)
+      cb(data);
+    }
+   
+  });
+};
+
 module.exports = {
-  addUser
+  addUser,
+  signIn
 };

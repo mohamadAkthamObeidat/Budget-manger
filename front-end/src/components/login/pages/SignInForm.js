@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class SignInForm extends Component {
     constructor() {
@@ -9,6 +10,8 @@ class SignInForm extends Component {
             email: '',
             password: ''
         };
+
+        
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,7 +29,11 @@ class SignInForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
+      console.log('this.state', this.state)
+        axios.post('/ss', this.state)
+        .then (response => {
+          console.log('Res:',response.data)
+        })
         console.log('The form was submitted with the following data:');
         console.log(this.state);
     }
