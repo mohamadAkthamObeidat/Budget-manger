@@ -6,19 +6,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// app.get("/", (req, res) => {
-//   res.json("server is working");
-// });
-
 app.get("/all", (req, res) => {
   mongo.getIniRepos(result => {
     res.json(result);
   });
 });
 
-app.post("/add", (req, res) => {
-  let repo = req.body;
-  mongo.postRepo(repo, result => {
+app.post("/signUp", (req, res) => {
+  const user = req.body;
+  console.log('user', user)
+  mongo.addUser(user, result => {
     res.json(result);
   });
 });
