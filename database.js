@@ -18,16 +18,24 @@ db.once("open", function() {
 
 let moneySchema = new mongoose.Schema({
   name: String,
-  Email: String,
+  email: String,
   password: String,
   income: Number,
+  saving: Number,
   currency: String
 });
 
 let money = mongoose.model("money", moneySchema);
 
 let addUser = (user, cb) => {
-  money.insertOne(user, function(error, docs) {});
+  console.log('user', user)
+  money.create(user, (err, data) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(data);
+    }
+  });
 };
 
 module.exports = {
