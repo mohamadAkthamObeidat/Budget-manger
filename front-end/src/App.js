@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
+import Search from './components/search'
 import Sidebar from "./components/dashboard/sidebar";
 import Main from "./components/login/Main";
-
 import Dashboard from "./components/dashboard/Dashboard";
 import PaymentModal from "./components/dashboard/PaymentModal";
 
@@ -13,12 +13,12 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <PaymentModal />
         <Dashboard />
         {/* <Main /> */}
         {/* <Search /> */}
         {/* <Main /> */}
         {/* <Sidebar /> */}
+
       </Router>
     </div>
   );

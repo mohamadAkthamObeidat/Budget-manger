@@ -21,7 +21,7 @@ export default class search extends Component {
     submitHandler = (e) => {
         e.preventDefault();
 
-        axios.get(`https://jsonplaceholder.typicode.com/users`)
+        axios.post(`/serch`)
             .then(res => {
                 console.log(res.data)
             })
