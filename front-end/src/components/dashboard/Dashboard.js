@@ -97,6 +97,11 @@ export class Dashboard extends Component {
               ? `Current Balance: ${this.props.userData[0].income} ${this.props.userData[0].currency}`
               : ""}
           </p>
+             <p className="balance">
+            {this.props.userData
+              ? `saving: ${this.props.userData[0].saving} ${this.props.userData[0].currency}`
+              : ""}
+          </p>
         </div>
 
         <button> Salary deposite</button>
