@@ -33,11 +33,13 @@ class SignUpForm extends Component {
   }
 
   handleSubmit(e) {
+    alert('you have successfully signed');
     e.preventDefault();
     console.log("Submit", this.state);
     axios.post("/signUp", this.state).then(response => {
       console.log("Res:", response.data);
       this.props.history.push("/login");
+      
     });
   }
 
@@ -176,13 +178,14 @@ class SignUpForm extends Component {
           </div>
 
           <div className="FormField">
-            <button className="FormField__Button mr-20">Sign Up</button>{" "}
+            <button  className="FormField__Button mr-20">Sign Up</button>{" "}
             <Link to="/sign-in" className="FormField__Link">
               I'm already member
             </Link>
           </div>
           <Terms />
         </form>
+        
       </div>
     );
   }
