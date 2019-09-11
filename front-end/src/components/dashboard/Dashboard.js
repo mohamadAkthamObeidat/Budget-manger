@@ -17,9 +17,9 @@ export class Dashboard extends Component {
   //Return All Expenses From Database.
   getExpenses = () => {
     axios
-      .get("/expenses")
+      .get(`/expenses/${this.props.userData[0]._id}`)
       .then(response => {
-        this.setState({ expenses: response.data });
+        this.setState({ expenses: response.data.expenses });
       })
       .catch(error => {
         console.log("NO DATA FETCHED :", error);
@@ -29,10 +29,13 @@ export class Dashboard extends Component {
   //@METHOD POST
   //Add New Expense to Database.
   addExpenses = (newExpense, clearInputs) => {
+    debugger;
+    newExpense.date = Date.now();
+    newExpense.user_id = this.props.userData[0]._id;
     axios
       .post("/expenses", newExpense)
       .then(response => {
-        this.setState({ expenses: response.data });
+        this.setState({ expenses: response.data.expenses });
       })
       .catch(error => {
         console.log("NO DATA FETCHED :", error);
@@ -71,14 +74,26 @@ export class Dashboard extends Component {
       });
   };
 
+  // componentDidMount() {
+  //   if (!this.props.userData) {
+  //     return this.props.history.push("/login");
+  //   }
+  //   this.getExpenses();
+  // }
+
   render() {
+    console.log(this.props.userData);
     return (
       <div className="body">
         <Sidebar />
         <div className="user-info">
-          <h2 className="user-name">{this.state.userName}</h2>
+          <h2 className="user-name">
+            {this.props.userData ? this.props.userData[0].name : "please login"}
+          </h2>
           <p className="balance">
-            Current Balance: {this.state.balance} {this.state.currency}{" "}
+            {this.props.userData
+              ? `Current Balance: ${this.props.userData[0].income} ${this.props.userData[0].currency}`
+              : ""}
           </p>
         </div>
 
@@ -87,7 +102,7 @@ export class Dashboard extends Component {
             type="button"
             data-toggle="modal"
             data-target="#exampleModal"
-            onClick={this.addPaymentHandler}
+            // onClick={this.addPaymentHandler}
           >
             {" "}
             <img src={require("../../Assets/cash.svg")} alt="" /> Add a Payment

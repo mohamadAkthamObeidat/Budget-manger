@@ -14,17 +14,29 @@ app.get("/all", (req, res) => {
 
 app.post("/signUp", (req, res) => {
   const user = req.body;
-  console.log('user', user)
+  console.log("user", user);
   mongo.addUser(user, result => {
     res.json(result);
   });
 });
 app.post("/ss", (req, res) => {
   const userSignIn = req.body;
-  console.log('shakeruser', userSignIn)
+  console.log("shakeruser", userSignIn);
   mongo.signIn(userSignIn, result => {
-    if (result.length <1)
-      res.json('password and email does not match');
+    if (result.length < 1) res.json("password and email does not match");
+    res.json(result);
+  });
+});
+
+app.post("/expenses", (req, res) => {
+  mongo.createExpenses(req.body, result => {
+    res.json(result);
+  });
+});
+
+app.get("/expenses/:id", (req, res) => {
+  const userId = req.params.id;
+  mongo.getUserExpenses(userId, result => {
     res.json(result);
   });
 });

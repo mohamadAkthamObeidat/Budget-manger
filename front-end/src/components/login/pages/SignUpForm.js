@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Terms, { TermsOfServices } from "../../TermsOfServices";
 
 class SignUpForm extends Component {
   constructor() {
@@ -33,9 +34,9 @@ class SignUpForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     console.log("Submit", this.state);
-
     axios.post("/signUp", this.state).then(response => {
       console.log("Res:", response.data);
+      this.props.history.push("/dashboard");
     });
   }
 
@@ -149,7 +150,11 @@ class SignUpForm extends Component {
                 required
               />{" "}
               I agree all statements in{" "}
-              <a href="" className="FormField__TermsLink">
+              <a
+                data-toggle="modal"
+                data-target="#exampleModalLong"
+                className="FormField__TermsLink"
+              >
                 terms of service
               </a>
             </label>
@@ -161,6 +166,7 @@ class SignUpForm extends Component {
               I'm already member
             </Link>
           </div>
+          <Terms />
         </form>
       </div>
     );

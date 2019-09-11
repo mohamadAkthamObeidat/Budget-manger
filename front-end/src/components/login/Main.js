@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { HashRouter as Router, Route, Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Switch, Route } from "react-router-dom";
 import SignUpForm from "./pages/SignUpForm";
 import SignInForm from "./pages/SignInForm";
 
@@ -8,21 +8,40 @@ import "./App.css";
 class App extends Component {
   render() {
     return (
-      <Router basename="/">
+      <>
+        {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <ul className="navbar-nav mr-auto">
+            <li>
+              <Link to={"/"} className="nav-link">
+                {" "}
+                Home{" "}
+              </Link>
+            </li>
+            <li>
+              <Link to={"/contact"} className="nav-link">
+                Contact
+              </Link>
+            </li>
+            <li>
+              <Link to={"/about"} className="nav-link">
+                About
+              </Link>
+            </li>
+          </ul>
+        </nav> */}
         {/* <div className="App"> */}
         <div className="App__Aside"></div>
         <div className="App__Form">
           <div className="PageSwitcher">
             <NavLink
-              to="/sign-in"
+              to="/login"
               activeClassName="PageSwitcher__Item--Active"
               className="PageSwitcher__Item"
             >
               Sign In
             </NavLink>
             <NavLink
-              exact
-              to="/"
+              to="/sign"
               activeClassName="PageSwitcher__Item--Active"
               className="PageSwitcher__Item"
             >
@@ -32,7 +51,7 @@ class App extends Component {
 
           <div className="FormTitle">
             <NavLink
-              to="/sign-in"
+              to="/login"
               activeClassName="FormTitle__Link--Active"
               className="FormTitle__Link"
             >
@@ -40,21 +59,27 @@ class App extends Component {
             </NavLink>{" "}
             or{" "}
             <NavLink
-              exact
-              to="/"
+              to="/sign"
               activeClassName="FormTitle__Link--Active"
               className="FormTitle__Link"
             >
               Sign Up
             </NavLink>
           </div>
-
-          <Route exact path="/" component={SignUpForm}></Route>
-          <Route path="/sign-in" component={SignInForm}></Route>
+          <Switch>
+            <Route
+              path="/login"
+              render={props => (
+                <SignInForm
+                  {...props}
+                  updateUserData={this.props.updateUserData}
+                />
+              )}
+            />
+            <Route path="/sign" component={SignUpForm} />
+          </Switch>
         </div>
-
-        {/* </div> */}
-      </Router>
+      </>
     );
   }
 }
