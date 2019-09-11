@@ -88,7 +88,9 @@ export class Dashboard extends Component {
         <Sidebar />
         <div className="user-info">
           <h2 className="user-name">
-            {this.props.userData ? this.props.userData[0].name : "please login"}
+            {this.props.userData
+              ? this.props.userData[0].name
+              : this.props.history.push("/login")}
           </h2>
           <p className="balance">
             {this.props.userData
@@ -97,6 +99,7 @@ export class Dashboard extends Component {
           </p>
         </div>
 
+        <button> Salary deposite</button>
         <div className="add-payment">
           <button
             type="button"

@@ -12,6 +12,7 @@ class SignUpForm extends Component {
       password: "",
       name: "",
       income: 0,
+      balance: 0,
       saving: 0,
       currency: "",
       hasAgreed: false
@@ -36,7 +37,7 @@ class SignUpForm extends Component {
     console.log("Submit", this.state);
     axios.post("/signUp", this.state).then(response => {
       console.log("Res:", response.data);
-      this.props.history.push("/dashboard");
+      this.props.history.push("/login");
     });
   }
 
@@ -99,6 +100,20 @@ class SignUpForm extends Component {
               placeholder="Enter your Monthly Income"
               name="income"
               value={this.state.income}
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="FormField">
+            <label className="FormField__Label" htmlFor="number">
+              Your Current Balance
+            </label>
+            <input
+              type="number"
+              className="FormField__Input"
+              placeholder="Enter your Current Balance"
+              name="balance"
+              value={this.state.balance}
               onChange={this.handleChange}
               required
             />

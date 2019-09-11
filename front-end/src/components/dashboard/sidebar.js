@@ -42,7 +42,7 @@ const Sidebar = () => {
 
       <li className="logout">
         <Link to="/login">
-          <span className="nav-item-txt">LOGOUT>></span>
+          <button className="logout button">LOGOUT</button>
         </Link>
       </li>
     </nav>
