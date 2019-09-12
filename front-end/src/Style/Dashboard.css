@@ -16,13 +16,7 @@
     border: 1.5px solid #00900B;
     border-radius: 20px;
 }
-.add-salary{
-    position: absolute;
-    top:5%;
-    right: 25%;
-    border: 1.5px solid #00900B;
-    border-radius: 20px;
-}
+
 .add-payment img{
     max-width: 30px;
     max-height: 30px;
@@ -45,7 +39,7 @@
 table{
     max-width:70%;
     position: absolute;
-    top: 30%;
+    top: 40%;
     left: 25%;
 }
 
@@ -56,4 +50,18 @@ table{
     padding:12px;
     border: 1.5px solid transparent;
     border-radius: 20px;
+}
+.nav-bar{
+    background-color: #00900B;
+    max-height: 10%;
+    width: 80%;
+}
+
+.input-group{
+    position: absolute;
+    left: 68%;
+    top:25%;
+    display: flex;
+    justify-content: space-between;
+    margin: 8px;
 }

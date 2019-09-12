@@ -42,8 +42,9 @@ export class Dashboard extends Component {
   //@METHOD POST
   //Add New Expense to Database.
   addExpenses = (newExpense, clearInputs) => {
-    newExpense.date = Date.now();
-    newExpense.user_id = this.props.userData[0]._id;
+    // newExpense.date = Date.now();
+    newExpense.user_id = this.props.userData[0]._id; //Create New Key In 'newExpense Object' then assign to it The user id that come from "props.userData".
+    console.log('NEW EXPENSE :', newExpense);
     axios
       .post("/expenses", newExpense)
       .then(response => {
@@ -107,6 +108,7 @@ export class Dashboard extends Component {
     if (!x) return;
     let b = x[0];
     this.setState(b);
+    this.getExpenses();
   }
 
   //Store Input values In State
@@ -161,16 +163,31 @@ export class Dashboard extends Component {
           </p>
         </div>
 
-        <div className="add-salary">
-          <button onClick={this.addSalaryHandler}> Salary deposite</button>
-        </div>
 
-        <div className="add-payment">
-          <button type="button" data-toggle="modal" data-target="#exampleModal">
-            {" "}
-            <img src={require("../../Assets/cash.svg")} alt="" /> Add a Payment
+
+        {/* Add Expense Form */}
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Expense</span>
+          </div>
+          <input onChange={this.handleChange} value={title} type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name='title' />
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">value</span>
+          </div>
+          <input onChange={this.handleChange} value={value} type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name='value' />
+          <button onClick={this.handleAdd} type="button" data-toggle="modal" data-target="#exampleModal">
+            Add Expense
           </button>
         </div>
+        {/* End Of Add Expense Form */}
+
+        <div className="add-payment">
+          <img src={require("../../Assets/cash.svg")} alt="" />
+          <button onClick={this.addSalaryHandler}>  Salary Deposit</button>
+        </div>
+
+
+
         {this.state.expenses.length === 0 ? (
           <img
             className="empty"
@@ -178,27 +195,27 @@ export class Dashboard extends Component {
             alt=""
           />
         ) : (
-          <table className="table">
-            <thead className="thead-dark">
-              <tr>
-                <td scope="col">Date</td>
-                <td scope="col">Title</td>
-                <td scope="col">Value</td>
-                <td scope="col">Delete</td>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.expenses.map(element => (
-                <Row
-                  key={element._id}
-                  expenses={element}
-                  edit={this.updateExpenses}
-                  remove={this.deleteExpense}
-                />
-              ))}
-            </tbody>
-          </table>
-        )}
+            <table className="table">
+              <thead className="thead-dark">
+                <tr>
+                  <td scope="col">Date</td>
+                  <td scope="col">Title</td>
+                  <td scope="col">Value</td>
+                  <td scope="col">Delete</td>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.expenses.map(element => (
+                  <Row
+                    key={element._id}
+                    expenses={element}
+                    edit={this.updateExpenses}
+                    remove={this.deleteExpense}
+                  />
+                ))}
+              </tbody>
+            </table>
+          )}
       </div>
     );
   }
