@@ -7,7 +7,7 @@ import axios from "axios";
 import Row from "./Row";
 export class Dashboard extends Component {
   state = {
-    userName: "Mohammad Obeidat",
+    name: "Mohammad Obeidat",
     balance: 0,
     currency: "JD",
     expenses: []
@@ -43,6 +43,20 @@ export class Dashboard extends Component {
     clearInputs();
   };
 
+  addSalaryHandler = () => {
+    console.log(this.props.userData[0]._id);
+    axios
+      .post("/salary", { id: this.props.userData[0]._id })
+      .then(response => {
+        console.log(response.data);
+        let x = response.data;
+        this.setState({ balance: x });
+      })
+      .catch(error => {
+        console.log("NO DATA FETCHED :", error);
+      });
+  };
+
   //@METHOD PUT
   //Update Specific Expense.
   updateExpenses = (expenseID, newData, clearInputs) => {
@@ -74,15 +88,17 @@ export class Dashboard extends Component {
       });
   };
 
-  // componentDidMount() {
-  //   if (!this.props.userData) {
-  //     return this.props.history.push("/login");
-  //   }
-  //   this.getExpenses();
-  // }
+  componentDidMount() {
+    let x = this.props.userData;
+    if (!x) return;
+    let b = x[0];
+    this.setState(b);
+  }
 
   render() {
     console.log(this.props.userData);
+    console.log("state", this.state);
+
     return (
       <div className="body">
         <Sidebar />
@@ -94,12 +110,15 @@ export class Dashboard extends Component {
           </h2>
           <p className="balance">
             {this.props.userData
-              ? `Current Balance: ${this.props.userData[0].income} ${this.props.userData[0].currency}`
+              ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
               : ""}
           </p>
         </div>
 
-        <button> Salary deposite</button>
+        <div className="add-salary">
+          <button onClick={this.addSalaryHandler}> Salary deposite</button>
+        </div>
+
         <div className="add-payment">
           <button
             type="button"
