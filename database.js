@@ -93,10 +93,22 @@ const getUserExpenses = (user_id, cb) => {
     });
 };
 
+
+
+const putSalare= (balance, cb) => {
+  User.update({_id: balance.id}, { $set:{balance} })
+    .newBalance("balance")
+    .exec((err, user) => {
+      if (err) return cb(err);
+    })
+};
+
+
 module.exports = {
   addUser,
   signIn,
   getusers,
   createExpenses,
-  getUserExpenses
+  getUserExpenses,
+  putSalare
 };
