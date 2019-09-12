@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Sidebar from "./sidebar";
 import "../../Style/Dashboard.css";
 import PaymentModal from "./PaymentModal";
@@ -13,12 +12,15 @@ export class Dashboard extends Component {
     expenses: []
   };
 
+ 
+
   //@METHOD GET
   //Return All Expenses From Database.
   getExpenses = () => {
     axios
       .get(`/expenses/${this.props.userData[0]._id}`)
       .then(response => {
+        console.log('RESPONSE.DATA.EXPENSES :', response.data.expenses);
         this.setState({ expenses: response.data.expenses });
       })
       .catch(error => {
@@ -29,7 +31,6 @@ export class Dashboard extends Component {
   //@METHOD POST
   //Add New Expense to Database.
   addExpenses = (newExpense, clearInputs) => {
-    debugger;
     newExpense.date = Date.now();
     newExpense.user_id = this.props.userData[0]._id;
     axios
@@ -40,7 +41,8 @@ export class Dashboard extends Component {
       .catch(error => {
         console.log("NO DATA FETCHED :", error);
       });
-    clearInputs();
+      clearInputs();
+      this.getExpenses();
   };
 
   addSalaryHandler = () => {
@@ -88,12 +90,14 @@ export class Dashboard extends Component {
       });
   };
 
+
   componentDidMount() {
     let x = this.props.userData;
     if (!x) return;
     let b = x[0];
     this.setState(b);
   }
+
 
   render() {
     console.log(this.props.userData);
@@ -129,42 +133,31 @@ export class Dashboard extends Component {
             type="button"
             data-toggle="modal"
             data-target="#exampleModal"
-            // onClick={this.addPaymentHandler}
           >
             {" "}
             <img src={require("../../Assets/cash.svg")} alt="" /> Add a Payment
           </button>
         </div>
-        {this.state.expenses.length === 0 ? (
-          <img
-            className="empty"
-            src={require("../../Assets/empty.svg")}
-            alt=""
-          />
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <td>Date</td>
-                <td>Expenses</td>
-                <td>Value</td>
-                <td>Edit</td>
-                <td>Delete</td>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.expenses.map(element => (
-                <Row
-                  key={element._id}
-                  expenses={element}
-                  edit={this.updateExpenses}
-                  remove={this.deleteExpense}
-                />
-              ))}
-            </tbody>
-          </table>
-        )}
-        <PaymentModal create={this.addExpenses} />
+        {this.state.expenses.length === 0 ? (<img className="empty" src={require("../../Assets/empty.svg")} alt="" />) :
+          (
+            <table className='table'>
+              <thead className='thead-dark'>
+                <tr>
+                  <td scope="col">Date</td>
+                  <td scope="col">Title</td>
+                  <td scope="col">Value</td>
+                  <td scope="col">Edit</td>
+                  <td scope="col">Delete</td>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.expenses.map(element => (
+                  <Row key={element._id} expenses={element} edit={this.updateExpenses} remove={this.deleteExpense} />
+                ))}
+              </tbody>
+            </table>
+          )}
+        <PaymentModal addPayment={this.addExpenses} />
       </div>
     );
   }

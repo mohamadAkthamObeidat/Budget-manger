@@ -51,18 +51,10 @@
     font-size: 12px;
   }
 
-  .sidebar li:hover:not(.active) {
-    background-color: rgb(150, 150, 150);
-    color: white;
+  li:hover{
+    background-color: #fff;
+    color: #00900B
   }
-
-/*   
-  div.content {
-    margin-left: 200px;
-    padding: 1px 16px;
-    height: 1000px;
-  } */
-  
   @media screen and (max-width: 700px) {
     .sidebar {
       width: 100%;

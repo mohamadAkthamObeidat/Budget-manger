@@ -28,7 +28,9 @@ class SignInForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     console.log("this.state", this.state);
-    axios.post("/ss", this.state).then(response => {
+    axios
+    .post("/ss", this.state)
+    .then(response => {
       this.props.updateUserData(response.data);
       console.log("Res:", response.data);
       this.props.history.push("/dashboard");

@@ -8,23 +8,21 @@ mongoose.connect(
 );
 const db = mongoose.connection;
 
-db.on("error", function() {
+db.on("error", function () {
   console.log("mongoose connection error");
   console.log("____________________________");
 });
 
-db.once("open", function() {
+db.once("open", function () {
   console.log("mongoose connected successfully");
   console.log("____________________________");
 });
 
+
 let getusers = async cb => {
   try {
-    // console.log("1");
     let allUsers = await User.find({});
-    // console.log("2");
     cb(allUsers);
-    // console.log("3");
   } catch (error) {
     cb(error);
   }
@@ -54,12 +52,12 @@ let signIn = (userSignIn, cb) => {
 };
 
 const createExpenses = (data, cb) => {
-  const newExpens = new Expenses(data);
-  newExpens.save(err => {
+  const newExpense = new Expenses(data);
+  newExpense.save(err => {
     if (err) return cb(err);
     User.findOne({ _id: data.user_id }).exec((err, user) => {
       if (err) return cb(err);
-      user.expenses.push(newExpens._id);
+      user.expenses.push(newExpense._id);
       user.save();
       cb(user);
     });
@@ -104,6 +102,15 @@ const getUserExpenses = (user_id, cb) => {
 };
 
 
+const updateExpense = (expenseID, callback) => {
+
+}
+
+const deleteExpense = (expenseID, callback) => {
+
+}
+
+
 
 const putSalare= (balance, cb) => {
   User.update({_id: balance.id}, { $set:{balance} })
@@ -114,10 +121,11 @@ const putSalare= (balance, cb) => {
 };
 
 
+
 module.exports = {
   addUser,
   signIn,
-  getusers,
+  getUsers,
   createExpenses,
   getUserExpenses,
 

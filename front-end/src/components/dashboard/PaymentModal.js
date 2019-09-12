@@ -13,7 +13,7 @@ class PaymentModal extends Component {
   state = {
     newExpense: {
       date: currentDate,
-      expense: "",
+      title: "",
       value: 0
     }
   };
@@ -38,31 +38,42 @@ class PaymentModal extends Component {
     this.setState({
       // Change Value Of Specific Keys in Key inside State.
       newExpense: {
-        expense: "",
+        title: "",
         value: ""
       }
     });
   };
 
-  //Send State Values To 'Dashboard.js' Component.
   handleAdd = x => {
     console.log("x", x);
     x.create(this.state.newExpense, this.clearInputs);
   };
 
+
+  handleAdd = event => {
+    event.preventDefault();
+    console.log("asdasd:", this.props);
+    
+    this.props.addPayment(this.state.newExpense, this.clearInputs);
+  };
+
   render() {
+    console.log("SQuare:", this.props);
+    const { title, value } = this.state.newExpense;
+
     const { expense, value } = this.state.newExpense;
+
     return (
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Add a Payment</h5>
             </div>
@@ -72,12 +83,12 @@ class PaymentModal extends Component {
                 <div className="expenses">
                   <label className="expenses-lbl">Expenses</label>
                   <input
-                    name="expense"
+                    name="title"
                     className="inputs"
                     onChange={this.handleChange}
                     type="text"
                     placeholder="Ex: Bills.."
-                    value={expense}
+                    value={title}
                   ></input>
                 </div>
                 <div className="value">
@@ -104,8 +115,9 @@ class PaymentModal extends Component {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => this.handleAdd()}
                 data-dismiss="modal"
+                onClick={this.handleAdd}
+
               >
                 Add
               </button>

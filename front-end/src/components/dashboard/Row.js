@@ -35,7 +35,7 @@ export class Row extends Component {
   handleEdit = event => {
     event.preventDefault();
     this.props.edit(
-      this.props.expense._id,
+      this.props.expenses._id,
       this.state.newExpense,
       this.clearInputs
     );
@@ -44,7 +44,7 @@ export class Row extends Component {
   //Delete Specific Expense.
   handleDelete = event => {
     event.preventDefault();
-    this.props.remove(this.props.expense._id);
+    this.props.remove(this.props.expenses._id);
   };
 
   render() {
@@ -56,28 +56,10 @@ export class Row extends Component {
         <td>{expenses.title}</td>
         <td>{expenses.value}</td>
         <td>
-          <button
-            type="button"
-            data-toggle="modal"
-            data-target="#exampleModal"
-            onClick={this.handleEdit}
-            className="btn"
-          >
-            <img
-              className="icons"
-              src={require("../../Assets/edit.svg")}
-              alt=""
-            />
-          </button>
+          <button  type="button" data-toggle="modal" data-target="#exampleModal" onClick={this.handleEdit} className="btn btn-primary">Edit</button>
         </td>
         <td>
-          <button onClick={this.handleDelete} className="btn">
-            <img
-              className="icons"
-              src={require("../../Assets/delete.svg")}
-              alt=""
-            />
-          </button>
+          <button onClick={this.handleDelete} className="btn btn-danger"> Delete</button>
         </td>
       </tr>
     );
