@@ -18,24 +18,10 @@ db.once("open", function() {
   console.log("____________________________");
 });
 
-// let moneySchema = new mongoose.Schema({
-//   name: String,
-//   email: String,
-//   password: String,
-//   income: Number,
-//   saving: Number,
-//   currency: String
-// });
-
-// let money = mongoose.model("money", moneySchema);
-
-let getusers = async cb => {
+let getUsers = async cb => {
   try {
-    // console.log("1");
     let allUsers = await User.find({});
-    // console.log("2");
     cb(allUsers);
-    // console.log("3");
   } catch (error) {
     cb(error);
   }
@@ -43,13 +29,6 @@ let getusers = async cb => {
 
 let addUser = (user, cb) => {
   console.log("user", user);
-  // money.create(user, (err, data) => {
-  //   if (err) {
-  //     cb(err);
-  //   } else {
-  //     cb(data);
-  //   }
-  // });
   let newUser = new User(user);
   newUser.save(err => {
     if (err) return console.log("error", err);
@@ -72,16 +51,46 @@ let signIn = (userSignIn, cb) => {
 };
 
 const createExpenses = (data, cb) => {
-  const newExpens = new Expenses(data);
-  newExpens.save(err => {
+  const newExpense = new Expenses(data);
+  newExpense.save(err => {
     if (err) return cb(err);
     User.findOne({ _id: data.user_id }).exec((err, user) => {
       if (err) return cb(err);
-      user.expenses.push(newExpens._id);
+      user.expenses.push(newExpense._id);
       user.save();
       cb(user);
     });
   });
+};
+
+const addSalary = (user_id, cb) => {
+  console.log(user_id);
+  User.find({ _id: user_id }, (err, data) => {
+    if (err) return cb(err);
+    console.log("the balance value", data[0].balance);
+    let income = data[0].income;
+    let balance = data[0].balance;
+    let saving = data[0].saving;
+    let totalsaving = saving + balance;
+    data[0].saving = totalsaving;
+    data[0].balance = income;
+    console.log("the new value", data[0].balance);
+    // user.expenses.push(newExpens._id);
+    data[0].save();
+    console.log(data);
+    cb(data);
+  });
+
+  // const newExpens = new Expenses(data);
+  // newExpens.save(err => {
+  //   if (err) return cb(err);
+  //   User.findOne({ _id: data.user_id }).exec((err, user) => {
+  //     if (err) return cb(err);
+  //     user.expenses.push(newExpens._id);
+  //     user.save();
+  //     cb(user);
+  //   });
+  // });
 };
 
 const getUserExpenses = (user_id, cb) => {
@@ -93,10 +102,26 @@ const getUserExpenses = (user_id, cb) => {
     });
 };
 
+const updateExpense = (expenseID, callback) => {};
+
+const deleteExpense = (expenseID, callback) => {};
+
+const putSalare = (balance, cb) => {
+  User.update({ _id: balance.id }, { $set: { balance } })
+    .newBalance("balance")
+    .exec((err, user) => {
+      if (err) return cb(err);
+    });
+};
+
 module.exports = {
   addUser,
   signIn,
-  getusers,
+  getUsers,
   createExpenses,
-  getUserExpenses
+  getUserExpenses,
+
+  putSalare,
+
+  addSalary
 };

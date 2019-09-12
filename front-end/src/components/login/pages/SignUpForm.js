@@ -34,13 +34,12 @@ class SignUpForm extends Component {
   }
 //handle the data entered by the user after submitting it and send it to tghe server
   handleSubmit(e) {
-    alert('you have successfully signed up');
+    alert("you have successfully signed up");
     e.preventDefault();
     console.log("Submit", this.state);
     axios.post("/signUp", this.state).then(response => {
       console.log("Res:", response.data);
       this.props.history.push("/login");
-      
     });
   }
 
@@ -123,7 +122,7 @@ class SignUpForm extends Component {
           </div>
           <div className="FormField">
             <label className="FormField__Label" htmlFor="number">
-              Your Monthly Saving
+              Your Saving
             </label>
             <input
               type="number"
@@ -179,14 +178,13 @@ class SignUpForm extends Component {
           </div>
 
           <div className="FormField">
-            <button  className="FormField__Button mr-20">Sign Up</button>{" "}
-            <Link to="/sign-in" className="FormField__Link">
+            <button className="FormField__Button mr-20">Sign Up</button>{" "}
+            <Link to="/login" className="FormField__Link">
               I'm already member
             </Link>
           </div>
           <Terms />
         </form>
-        
       </div>
     );
   }

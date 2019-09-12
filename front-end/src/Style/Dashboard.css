@@ -16,7 +16,13 @@
     border: 1.5px solid #00900B;
     border-radius: 20px;
 }
-
+.add-salary{
+    position: absolute;
+    top:5%;
+    right: 25%;
+    border: 1.5px solid #00900B;
+    border-radius: 20px;
+}
 .add-payment img{
     max-width: 30px;
     max-height: 30px;
@@ -34,6 +40,13 @@
     position: absolute;
     top:20%;
     left: 30%;
+}
+
+table{
+    max-width:70%;
+    position: absolute;
+    top: 30%;
+    left: 25%;
 }
 
 .logout button{

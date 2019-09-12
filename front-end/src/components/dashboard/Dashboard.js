@@ -1,16 +1,28 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Sidebar from "./sidebar";
 import "../../Style/Dashboard.css";
-import PaymentModal from "./PaymentModal";
 import axios from "axios";
 import Row from "./Row";
+
+let today = new Date();
+let currentDate =
+  today.getDate() +
+  "-" +
+  parseInt(today.getMonth() + 1) +
+  "-" +
+  today.getFullYear();
+
 export class Dashboard extends Component {
   state = {
-    userName: "Mohammad Obeidat",
+    name: "Mohammad Obeidat",
     balance: 0,
     currency: "JD",
-    expenses: []
+    expenses: [],
+    newExpense: {
+      date: currentDate,
+      title: "",
+      value: 0
+    }
   };
 
   //@METHOD GET
@@ -19,6 +31,7 @@ export class Dashboard extends Component {
     axios
       .get(`/expenses/${this.props.userData[0]._id}`)
       .then(response => {
+        console.log("RESPONSE.DATA.EXPENSES :", response.data.expenses);
         this.setState({ expenses: response.data.expenses });
       })
       .catch(error => {
@@ -29,7 +42,6 @@ export class Dashboard extends Component {
   //@METHOD POST
   //Add New Expense to Database.
   addExpenses = (newExpense, clearInputs) => {
-    debugger;
     newExpense.date = Date.now();
     newExpense.user_id = this.props.userData[0]._id;
     axios
@@ -41,6 +53,22 @@ export class Dashboard extends Component {
         console.log("NO DATA FETCHED :", error);
       });
     clearInputs();
+    this.getExpenses();
+  };
+
+  addSalaryHandler = () => {
+    console.log(this.props.userData[0]._id);
+    axios
+      .post("/salary", { id: this.props.userData[0]._id })
+      .then(response => {
+        console.log(response.data);
+        let x = response.data[0].balance;
+        let y = response.data[0].saving;
+        this.setState({ balance: x, saving: y });
+      })
+      .catch(error => {
+        console.log("NO DATA FETCHED :", error);
+      });
   };
 
   //@METHOD PUT
@@ -74,15 +102,44 @@ export class Dashboard extends Component {
       });
   };
 
-  // componentDidMount() {
-  //   if (!this.props.userData) {
-  //     return this.props.history.push("/login");
-  //   }
-  //   this.getExpenses();
-  // }
+  componentDidMount() {
+    let x = this.props.userData;
+    if (!x) return;
+    let b = x[0];
+    this.setState(b);
+  }
+
+  //Store Input values In State
+  handleChange = event => {
+    this.setState({
+      newExpense: {
+        ...this.state.newExpense, // Copy The Entire Object In That State.
+        [event.target.name]: event.target.value // Change Name And Value Depend On Input Change Status.
+      }
+    });
+  };
+
+  //Clear Input Fields After Adding New Expense.
+  clearInputs = () => {
+    this.setState({
+      // Change Value Of Specific Keys in Key inside State.
+      newExpense: {
+        title: "",
+        value: ""
+      }
+    });
+  };
+
+  handleAdd = event => {
+    event.preventDefault();
+    console.log("asdasd:", this.props);
+    this.addExpenses(this.state.newExpense, this.clearInputs);
+  };
 
   render() {
     console.log(this.props.userData);
+    console.log("state", this.state);
+    const { title, value } = this.state.newExpense;
     return (
       <div className="body">
         <Sidebar />
@@ -94,24 +151,22 @@ export class Dashboard extends Component {
           </h2>
           <p className="balance">
             {this.props.userData
-              ? `Current Balance: ${this.props.userData[0].income} ${this.props.userData[0].currency}`
+              ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
               : ""}
           </p>
-             <p className="balance">
+          <p className="balance">
             {this.props.userData
-              ? `saving: ${this.props.userData[0].saving} ${this.props.userData[0].currency}`
+              ? `saving: ${this.state.saving} ${this.props.userData[0].currency}`
               : ""}
           </p>
         </div>
 
-        <button> Salary deposite</button>
+        <div className="add-salary">
+          <button onClick={this.addSalaryHandler}> Salary deposite</button>
+        </div>
+
         <div className="add-payment">
-          <button
-            type="button"
-            data-toggle="modal"
-            data-target="#exampleModal"
-            // onClick={this.addPaymentHandler}
-          >
+          <button type="button" data-toggle="modal" data-target="#exampleModal">
             {" "}
             <img src={require("../../Assets/cash.svg")} alt="" /> Add a Payment
           </button>
@@ -123,14 +178,13 @@ export class Dashboard extends Component {
             alt=""
           />
         ) : (
-          <table>
-            <thead>
+          <table className="table">
+            <thead className="thead-dark">
               <tr>
-                <td>Date</td>
-                <td>Expenses</td>
-                <td>Value</td>
-                <td>Edit</td>
-                <td>Delete</td>
+                <td scope="col">Date</td>
+                <td scope="col">Title</td>
+                <td scope="col">Value</td>
+                <td scope="col">Delete</td>
               </tr>
             </thead>
             <tbody>
@@ -145,7 +199,6 @@ export class Dashboard extends Component {
             </tbody>
           </table>
         )}
-        <PaymentModal create={this.addExpenses} />
       </div>
     );
   }
