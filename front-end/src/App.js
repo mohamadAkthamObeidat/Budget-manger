@@ -15,6 +15,7 @@ class App extends Component {
   updateUserData = user => {
     this.setState({ userData: user });
   };
+  
   render() {
     return (
       <Router>

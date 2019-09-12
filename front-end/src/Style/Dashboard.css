@@ -16,7 +16,13 @@
     border: 1.5px solid #00900B;
     border-radius: 20px;
 }
-
+.add-salary{
+    position: absolute;
+    top:5%;
+    right: 25%;
+    border: 1.5px solid #00900B;
+    border-radius: 20px;
+}
 .add-payment img{
     max-width: 30px;
     max-height: 30px;
@@ -35,9 +41,18 @@
     top:20%;
     left: 30%;
 }
+
 table{
     max-width:70%;
     position: absolute;
     top: 30%;
     left: 25%;
-}
+
+
+.logout button{
+    background-color: white;
+    color: #00900B;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding:12px;
+    border: 1.5px solid transparent;
+    border-radius: 20px;

@@ -18,18 +18,8 @@ db.once("open", function () {
   console.log("____________________________");
 });
 
-// let moneySchema = new mongoose.Schema({
-//   name: String,
-//   email: String,
-//   password: String,
-//   income: Number,
-//   saving: Number,
-//   currency: String
-// });
 
-// let money = mongoose.model("money", moneySchema);
-
-let getUsers = async cb => {
+let getusers = async cb => {
   try {
     let allUsers = await User.find({});
     cb(allUsers);
@@ -40,13 +30,6 @@ let getUsers = async cb => {
 
 let addUser = (user, cb) => {
   console.log("user", user);
-  // money.create(user, (err, data) => {
-  //   if (err) {
-  //     cb(err);
-  //   } else {
-  //     cb(data);
-  //   }
-  // });
   let newUser = new User(user);
   newUser.save(err => {
     if (err) return console.log("error", err);
@@ -81,6 +64,34 @@ const createExpenses = (data, cb) => {
   });
 };
 
+const addSalary = (user_id, cb) => {
+  console.log(user_id);
+  User.find({ _id: user_id }, (err, data) => {
+    if (err) return cb(err);
+    console.log("the balance value", data[0].balance);
+    let x = data[0].income;
+    let y = data[0].balance;
+    let c = x + y;
+    data[0].balance = c;
+    console.log("the new value", data[0].balance);
+    // user.expenses.push(newExpens._id);
+    data[0].save();
+    console.log(data);
+    cb(c);
+  });
+
+  // const newExpens = new Expenses(data);
+  // newExpens.save(err => {
+  //   if (err) return cb(err);
+  //   User.findOne({ _id: data.user_id }).exec((err, user) => {
+  //     if (err) return cb(err);
+  //     user.expenses.push(newExpens._id);
+  //     user.save();
+  //     cb(user);
+  //   });
+  // });
+};
+
 const getUserExpenses = (user_id, cb) => {
   User.findOne({ _id: user_id })
     .populate("expenses")
@@ -90,6 +101,7 @@ const getUserExpenses = (user_id, cb) => {
     });
 };
 
+
 const updateExpense = (expenseID, callback) => {
 
 }
@@ -98,10 +110,27 @@ const deleteExpense = (expenseID, callback) => {
 
 }
 
+
+
+const putSalare= (balance, cb) => {
+  User.update({_id: balance.id}, { $set:{balance} })
+    .newBalance("balance")
+    .exec((err, user) => {
+      if (err) return cb(err);
+    })
+};
+
+
+
 module.exports = {
   addUser,
   signIn,
   getUsers,
   createExpenses,
-  getUserExpenses
+  getUserExpenses,
+
+  putSalare,
+
+  addSalary
+
 };

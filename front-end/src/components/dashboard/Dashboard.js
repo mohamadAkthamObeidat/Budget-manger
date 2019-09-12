@@ -6,18 +6,13 @@ import axios from "axios";
 import Row from "./Row";
 export class Dashboard extends Component {
   state = {
-    userName: "Mohammad Obeidat",
+    name: "Mohammad Obeidat",
     balance: 0,
     currency: "JD",
     expenses: []
   };
 
-  // componentDidMount() {
-  //   if (!this.props.userData) {
-  //     return this.props.history.push("/login");
-  //   }
-  //   this.getExpenses();
-  // }
+ 
 
   //@METHOD GET
   //Return All Expenses From Database.
@@ -48,6 +43,20 @@ export class Dashboard extends Component {
       });
       clearInputs();
       this.getExpenses();
+  };
+
+  addSalaryHandler = () => {
+    console.log(this.props.userData[0]._id);
+    axios
+      .post("/salary", { id: this.props.userData[0]._id })
+      .then(response => {
+        console.log(response.data);
+        let x = response.data;
+        this.setState({ balance: x });
+      })
+      .catch(error => {
+        console.log("NO DATA FETCHED :", error);
+      });
   };
 
   //@METHOD PUT
@@ -82,21 +91,41 @@ export class Dashboard extends Component {
   };
 
 
+  componentDidMount() {
+    let x = this.props.userData;
+    if (!x) return;
+    let b = x[0];
+    this.setState(b);
+  }
+
 
   render() {
     console.log(this.props.userData);
+    console.log("state", this.state);
+
     return (
       <div className="body">
         <Sidebar />
         <div className="user-info">
           <h2 className="user-name">
-            {this.props.userData ? this.props.userData[0].name : "please login"}
+            {this.props.userData
+              ? this.props.userData[0].name
+              : this.props.history.push("/login")}
           </h2>
           <p className="balance">
             {this.props.userData
-              ? `Current Balance: ${this.props.userData[0].income} ${this.props.userData[0].currency}`
+              ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
               : ""}
           </p>
+             <p className="balance">
+            {this.props.userData
+              ? `saving: ${this.props.userData[0].saving} ${this.props.userData[0].currency}`
+              : ""}
+          </p>
+        </div>
+
+        <div className="add-salary">
+          <button onClick={this.addSalaryHandler}> Salary deposite</button>
         </div>
 
         <div className="add-payment">

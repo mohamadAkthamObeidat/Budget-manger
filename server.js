@@ -28,6 +28,14 @@ app.post("/ss", (req, res) => {
 
 app.post("/expenses", (req, res) => {
   mongo.createExpenses(req.body, result => {
+    res.send(result);
+  });
+});
+
+app.post("/salary", (req, res) => {
+  // console.log(req.body);
+  mongo.addSalary(req.body.id, result => {
+    console.log("server result", result);
     res.json(result);
   });
 });
@@ -40,6 +48,7 @@ app.get("/expenses/:id", (req, res) => {
 });
 
 // app.put("/update/:id", (req, res) => {
+
 //   let expenseID = req.params.id;
 //   mongo.updateExpense(expenseID, req.body,result => {
 //     res.json(result);
@@ -56,6 +65,22 @@ app.get("/expenses/:id", (req, res) => {
 
 
 
+//   let repo = req.params.id;
+//   // console.log(repo);
+//   mongo.updateRepo(repo, result => {
+//     res.json(result);
+//   });
+// });
+
+// app.delete("/delete/:id", function(req, res) {
+//   let repoId = req.params.id;
+//   // console.log(repoId);
+//   mongo.deleteRepo(repoId, result => {
+//     res.json(result);
+//   });
+// });
+
+
 const path = require("path");
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, "front-end/build")));
@@ -63,6 +88,13 @@ app.use(express.static(path.join(__dirname, "front-end/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/front-end/build/index.html"));
 });
+
+app.post("/settings", (req, res) => {
+  mongo.putSalare(req.body, result => {
+    res.json(result);
+  });
+});
+
 
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => console.log(`Server listening to ${PORT}`));
