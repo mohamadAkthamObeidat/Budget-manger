@@ -35,3 +35,9 @@
     top:20%;
     left: 30%;
 }
+table{
+    max-width:70%;
+    position: absolute;
+    top: 30%;
+    left: 25%;
+}
