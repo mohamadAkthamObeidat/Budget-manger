@@ -18,6 +18,11 @@ class PaymentModal extends Component {
     }
   };
 
+  componentDidMount() {
+    console.log("asdasd", this.props);
+    var x = this.props.create;
+    console.log("x", x);
+  }
   //Store Input values In State
   handleChange = event => {
     this.setState({
@@ -40,13 +45,12 @@ class PaymentModal extends Component {
   };
 
   //Send State Values To 'Dashboard.js' Component.
-  handleAdd = event => {
-    event.preventDefault();
-    this.props.create(this.state.newExpense, this.clearInputs);
+  handleAdd = x => {
+    console.log("x", x);
+    x.create(this.state.newExpense, this.clearInputs);
   };
 
   render() {
-    console.log("asdasd", this.props);
     const { expense, value } = this.state.newExpense;
     return (
       <div
@@ -100,7 +104,8 @@ class PaymentModal extends Component {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={this.handleAdd}
+                onClick={() => this.handleAdd()}
+                data-dismiss="modal"
               >
                 Add
               </button>

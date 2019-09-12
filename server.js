@@ -30,6 +30,14 @@ app.post("/ss", (req, res) => {
 
 app.post("/expenses", (req, res) => {
   mongo.createExpenses(req.body, result => {
+    res.send(result);
+  });
+});
+
+app.post("/salary", (req, res) => {
+  // console.log(req.body);
+  mongo.addSalary(req.body.id, result => {
+    console.log("server result", result);
     res.json(result);
   });
 });
@@ -41,21 +49,21 @@ app.get("/expenses/:id", (req, res) => {
   });
 });
 
-app.put("/update/:id", (req, res) => {
-  let repo = req.params.id;
-  // console.log(repo);
-  mongo.updateRepo(repo, result => {
-    res.json(result);
-  });
-});
+// app.put("/update/:id", (req, res) => {
+//   let repo = req.params.id;
+//   // console.log(repo);
+//   mongo.updateRepo(repo, result => {
+//     res.json(result);
+//   });
+// });
 
-app.delete("/delete/:id", function(req, res) {
-  let repoId = req.params.id;
-  // console.log(repoId);
-  mongo.deleteRepo(repoId, result => {
-    res.json(result);
-  });
-});
+// app.delete("/delete/:id", function(req, res) {
+//   let repoId = req.params.id;
+//   // console.log(repoId);
+//   mongo.deleteRepo(repoId, result => {
+//     res.json(result);
+//   });
+// });
 
 const path = require("path");
 // Serve static files from the React frontend app
