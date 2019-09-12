@@ -107,8 +107,9 @@ export class Dashboard extends Component {
     let x = this.props.userData;
     if (!x) return;
     let b = x[0];
-    this.setState(b);
-    this.getExpenses();
+    this.setState({
+      expenses: b.expenses,
+    });
   }
 
   //Store Input values In State
