@@ -73,5 +73,12 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/front-end/build/index.html"));
 });
 
+app.post("/settings", (req, res) => {
+  mongo.putSalare(req.body, result => {
+    res.json(result);
+  });
+});
+
+
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => console.log(`Server listening to ${PORT}`));
