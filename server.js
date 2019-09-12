@@ -11,13 +11,14 @@ app.get("/all", (req, res) => {
     res.json(result);
   });
 });
-
+// post the data entered by the user during signup to the data base
 app.post("/signUp", (req, res) => {
   const user = req.body;
   mongo.addUser(user, result => {
     res.json(result);
   });
 });
+// post the data entered by the user during the sining in to the data base
 app.post("/ss", (req, res) => {
   const userSignIn = req.body;
   mongo.signIn(userSignIn, result => {
@@ -25,7 +26,7 @@ app.post("/ss", (req, res) => {
     res.json(result);
   });
 });
-
+// expenses are sent to the database after being entered by the user
 app.post("/expenses", (req, res) => {
   mongo.createExpenses(req.body, result => {
     res.send(result);
@@ -39,13 +40,15 @@ app.post("/salary", (req, res) => {
     res.json(result);
   });
 });
-
+// ?? OBIEDAT
 app.get("/expenses/:id", (req, res) => {
   const userId = req.params.id;
   mongo.getUserExpenses(userId, result => {
     res.json(result);
   });
 });
+
+
 
 // app.put("/update/:id", (req, res) => {
 
