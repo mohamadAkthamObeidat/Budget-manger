@@ -11,7 +11,7 @@ app.get("/all", (req, res) => {
     res.json(result);
   });
 });
-
+// post the data entered by the user during signup to the data base
 app.post("/signUp", (req, res) => {
   const user = req.body;
   console.log("user", user);
@@ -19,6 +19,7 @@ app.post("/signUp", (req, res) => {
     res.json(result);
   });
 });
+// post the data entered by the user during the sining in to the data base
 app.post("/ss", (req, res) => {
   const userSignIn = req.body;
   console.log("shakeruser", userSignIn);
@@ -27,20 +28,20 @@ app.post("/ss", (req, res) => {
     res.json(result);
   });
 });
-
+// expenses are sent to the database after being entered by the user
 app.post("/expenses", (req, res) => {
   mongo.createExpenses(req.body, result => {
     res.json(result);
   });
 });
-
+// ?? OBIEDAT
 app.get("/expenses/:id", (req, res) => {
   const userId = req.params.id;
   mongo.getUserExpenses(userId, result => {
     res.json(result);
   });
 });
-
+// edit the user data
 app.put("/update/:id", (req, res) => {
   let repo = req.params.id;
   // console.log(repo);
@@ -48,7 +49,7 @@ app.put("/update/:id", (req, res) => {
     res.json(result);
   });
 });
-
+// delete user data
 app.delete("/delete/:id", function(req, res) {
   let repoId = req.params.id;
   // console.log(repoId);

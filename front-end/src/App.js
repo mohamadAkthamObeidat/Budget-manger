@@ -11,7 +11,7 @@ class App extends Component {
   state = {
     userData: null
   };
-
+// event handler to handle the data entered by the user
   updateUserData = user => {
     this.setState({ userData: user });
   };
@@ -33,6 +33,7 @@ class App extends Component {
             {/* <Route exact path="/settings" component={Setting} /> */}
             {/* <Route exact path="/account-statement" component={} /> */}
             <Route
+            //to access the main page which contain signin and signup 
               path="/"
               render={props => (
                 <Main {...props} updateUserData={this.updateUserData} />
