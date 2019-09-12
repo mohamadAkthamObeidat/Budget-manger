@@ -33,6 +33,7 @@ class SignUpForm extends Component {
   }
 
   handleSubmit(e) {
+    alert("you have successfully signed up");
     e.preventDefault();
     console.log("Submit", this.state);
     axios.post("/signUp", this.state).then(response => {

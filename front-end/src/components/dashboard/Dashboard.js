@@ -113,6 +113,11 @@ export class Dashboard extends Component {
               ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
               : ""}
           </p>
+             <p className="balance">
+            {this.props.userData
+              ? `saving: ${this.props.userData[0].saving} ${this.props.userData[0].currency}`
+              : ""}
+          </p>
         </div>
 
         <div className="add-salary">
