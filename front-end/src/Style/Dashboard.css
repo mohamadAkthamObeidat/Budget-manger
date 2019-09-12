@@ -47,7 +47,7 @@ table{
     position: absolute;
     top: 30%;
     left: 25%;
-
+}
 
 .logout button{
     background-color: white;
@@ -56,3 +56,4 @@ table{
     padding:12px;
     border: 1.5px solid transparent;
     border-radius: 20px;
+}

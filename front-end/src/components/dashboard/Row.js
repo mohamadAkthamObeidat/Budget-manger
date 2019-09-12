@@ -32,14 +32,14 @@ export class Row extends Component {
   };
 
   //Update State Values in 'Dashboard.js' Component.
-  handleEdit = event => {
-    event.preventDefault();
-    this.props.edit(
-      this.props.expenses._id,
-      this.state.newExpense,
-      this.clearInputs
-    );
-  };
+  // handleEdit = event => {
+  //   event.preventDefault();
+  //   this.props.edit(
+  //     this.props.expenses._id,
+  //     this.state.newExpense,
+  //     this.clearInputs
+  //   );
+  // };
 
   //Delete Specific Expense.
   handleDelete = event => {
@@ -51,15 +51,14 @@ export class Row extends Component {
     const { expenses } = this.props;
     return (
       <tr>
-        <PaymentModal />
         <td>{expenses.date}</td>
         <td>{expenses.title}</td>
         <td>{expenses.value}</td>
         <td>
-          <button  type="button" data-toggle="modal" data-target="#exampleModal" onClick={this.handleEdit} className="btn btn-primary">Edit</button>
-        </td>
-        <td>
-          <button onClick={this.handleDelete} className="btn btn-danger"> Delete</button>
+          <button onClick={this.handleDelete} className="btn btn-danger">
+            {" "}
+            Delete
+          </button>
         </td>
       </tr>
     );

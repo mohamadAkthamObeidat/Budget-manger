@@ -8,18 +8,17 @@ mongoose.connect(
 );
 const db = mongoose.connection;
 
-db.on("error", function () {
+db.on("error", function() {
   console.log("mongoose connection error");
   console.log("____________________________");
 });
 
-db.once("open", function () {
+db.once("open", function() {
   console.log("mongoose connected successfully");
   console.log("____________________________");
 });
 
-
-let getusers = async cb => {
+let getUsers = async cb => {
   try {
     let allUsers = await User.find({});
     cb(allUsers);
@@ -69,15 +68,17 @@ const addSalary = (user_id, cb) => {
   User.find({ _id: user_id }, (err, data) => {
     if (err) return cb(err);
     console.log("the balance value", data[0].balance);
-    let x = data[0].income;
-    let y = data[0].balance;
-    let c = x + y;
-    data[0].balance = c;
+    let income = data[0].income;
+    let balance = data[0].balance;
+    let saving = data[0].saving;
+    let totalsaving = saving + balance;
+    data[0].saving = totalsaving;
+    data[0].balance = income;
     console.log("the new value", data[0].balance);
     // user.expenses.push(newExpens._id);
     data[0].save();
     console.log(data);
-    cb(c);
+    cb(data);
   });
 
   // const newExpens = new Expenses(data);
@@ -101,26 +102,17 @@ const getUserExpenses = (user_id, cb) => {
     });
 };
 
+const updateExpense = (expenseID, callback) => {};
 
-const updateExpense = (expenseID, callback) => {
+const deleteExpense = (expenseID, callback) => {};
 
-}
-
-const deleteExpense = (expenseID, callback) => {
-
-}
-
-
-
-const putSalare= (balance, cb) => {
-  User.update({_id: balance.id}, { $set:{balance} })
+const putSalare = (balance, cb) => {
+  User.update({ _id: balance.id }, { $set: { balance } })
     .newBalance("balance")
     .exec((err, user) => {
       if (err) return cb(err);
-    })
+    });
 };
-
-
 
 module.exports = {
   addUser,
@@ -132,5 +124,4 @@ module.exports = {
   putSalare,
 
   addSalary
-
 };
