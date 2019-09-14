@@ -48,7 +48,16 @@ app.get("/expenses/:id", (req, res) => {
   });
 });
 
-
+app.delete("/delete/:expid/:userid", (req, res) => {
+  let expenseID = req.params.expid;
+  let userID = req.params.userid;
+  console.log("expenseID", expenseID);
+  console.log("userID", userID);
+  res.send("HI");
+  // mongo.deleteExpense(expenseID, result => {
+  //   res.json(result);
+  // });
+});
 
 // app.put("/update/:id", (req, res) => {
 
@@ -65,9 +74,6 @@ app.get("/expenses/:id", (req, res) => {
 //   });
 // });
 
-
-
-
 //   let repo = req.params.id;
 //   // console.log(repo);
 //   mongo.updateRepo(repo, result => {
@@ -83,7 +89,6 @@ app.get("/expenses/:id", (req, res) => {
 //   });
 // });
 
-
 const path = require("path");
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, "front-end/build")));
@@ -97,7 +102,6 @@ app.post("/settings", (req, res) => {
     res.json(result);
   });
 });
-
 
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => console.log(`Server listening to ${PORT}`));

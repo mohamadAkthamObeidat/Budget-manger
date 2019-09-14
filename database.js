@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const User = require("./User");
 const Expenses = require("./Expenses");
 
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
+mongoose.set("useUnifiedTopology", true);
+
 mongoose.connect(
   "mongodb+srv://alorayb:ah123456@cluster0-qektw.mongodb.net/test?retryWrites=true&w=majority",
   { useNewUrlParser: true }
@@ -80,17 +85,14 @@ const addSalary = (user_id, cb) => {
     console.log(data);
     cb(data);
   });
+};
 
-  // const newExpens = new Expenses(data);
-  // newExpens.save(err => {
-  //   if (err) return cb(err);
-  //   User.findOne({ _id: data.user_id }).exec((err, user) => {
-  //     if (err) return cb(err);
-  //     user.expenses.push(newExpens._id);
-  //     user.save();
-  //     cb(user);
-  //   });
-  // });
+const deleteExpense = (expID, cb) => {
+  expenses.deleteOne({ _id: expID }, (err, data) => {
+    if (err) return cb(err);
+    console.log(data);
+    cb(data);
+  });
 };
 
 const getUserExpenses = (user_id, cb) => {
@@ -101,10 +103,6 @@ const getUserExpenses = (user_id, cb) => {
       cb(user);
     });
 };
-
-const updateExpense = (expenseID, callback) => {};
-
-const deleteExpense = (expenseID, callback) => {};
 
 const putSalare = (balance, cb) => {
   User.update({ _id: balance.id }, { $set: { balance } })
@@ -120,6 +118,7 @@ module.exports = {
   getUsers,
   createExpenses,
   getUserExpenses,
+  deleteExpense,
 
   putSalare,
 

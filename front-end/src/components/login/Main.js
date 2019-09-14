@@ -47,7 +47,7 @@ class App extends Component {
           </div>
           <Switch>
             <Route
-              path="/login"
+              path="/"
               render={props => (
                 <SignInForm
                   {...props}

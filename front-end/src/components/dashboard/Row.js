@@ -44,7 +44,8 @@ export class Row extends Component {
   //Delete Specific Expense.
   handleDelete = event => {
     event.preventDefault();
-    this.props.remove(this.props.expenses._id);
+    console.log(this.props);
+    this.props.remove(this.props.expenses._id, this.props.user);
   };
 
   render() {

@@ -44,7 +44,7 @@ export class Dashboard extends Component {
   addExpenses = (newExpense, clearInputs) => {
     // newExpense.date = Date.now();
     newExpense.user_id = this.props.userData[0]._id; //Create New Key In 'newExpense Object' then assign to it The user id that come from "props.userData".
-    console.log('NEW EXPENSE :', newExpense);
+    console.log("NEW EXPENSE :", newExpense);
     axios
       .post("/expenses", newExpense)
       .then(response => {
@@ -90,13 +90,12 @@ export class Dashboard extends Component {
 
   //@METHOD DELETE
   //Delete Specific Expense From Database.
-  deleteExpense = expenseID => {
+  deleteExpense = (expenseID, userID) => {
+    console.log("delete", expenseID, userID);
     axios
-      .delete(`/expenses/${expenseID}`)
+      .delete(`/delete/${expenseID}/${userID}`)
       .then(response => {
-        this.setState({
-          expenses: response.data
-        });
+        console.log("deleted", response);
       })
       .catch(error => {
         console.log("NO DATA FETCHED", error);
@@ -163,19 +162,44 @@ export class Dashboard extends Component {
           </p>
         </div>
 
-
-
         {/* Add Expense Form */}
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Expense</span>
+            <span class="input-group-text" id="basic-addon1">
+              Expense
+            </span>
           </div>
-          <input onChange={this.handleChange} value={title} type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name='title' />
+          <input
+            onChange={this.handleChange}
+            value={title}
+            type="text"
+            class="form-control"
+            placeholder="Expense"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            name="title"
+          />
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">value</span>
+            <span class="input-group-text" id="basic-addon1">
+              value
+            </span>
           </div>
-          <input onChange={this.handleChange} value={value} type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name='value' />
-          <button onClick={this.handleAdd} type="button" data-toggle="modal" data-target="#exampleModal">
+          <input
+            onChange={this.handleChange}
+            value={value}
+            type="text"
+            class="form-control"
+            placeholder="Username"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            name="value"
+          />
+          <button
+            onClick={this.handleAdd}
+            type="button"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
             Add Expense
           </button>
         </div>
@@ -183,10 +207,8 @@ export class Dashboard extends Component {
 
         <div className="add-payment">
           <img src={require("../../Assets/cash.svg")} alt="" />
-          <button onClick={this.addSalaryHandler}>  Salary Deposit</button>
+          <button onClick={this.addSalaryHandler}> Salary Deposit</button>
         </div>
-
-
 
         {this.state.expenses.length === 0 ? (
           <img
@@ -195,27 +217,28 @@ export class Dashboard extends Component {
             alt=""
           />
         ) : (
-            <table className="table">
-              <thead className="thead-dark">
-                <tr>
-                  <td scope="col">Date</td>
-                  <td scope="col">Title</td>
-                  <td scope="col">Value</td>
-                  <td scope="col">Delete</td>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.expenses.map(element => (
-                  <Row
-                    key={element._id}
-                    expenses={element}
-                    edit={this.updateExpenses}
-                    remove={this.deleteExpense}
-                  />
-                ))}
-              </tbody>
-            </table>
-          )}
+          <table className="table">
+            <thead className="thead-dark">
+              <tr>
+                <td scope="col">Date</td>
+                <td scope="col">Title</td>
+                <td scope="col">Value</td>
+                <td scope="col">Delete</td>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.expenses.map(element => (
+                <Row
+                  key={element._id}
+                  expenses={element}
+                  edit={this.updateExpenses}
+                  remove={this.deleteExpense}
+                  user={this.state._id}
+                />
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     );
   }
