@@ -45,6 +45,14 @@ app.post("/salary", (req, res) => {
   });
 });
 
+app.post("/search", (req, res) => {
+  // console.log(req.body);
+  mongo.search(req.body, result => {
+    console.log("server result", result);
+    res.json(result);
+  });
+});
+
 app.get("/expenses/:id", (req, res) => {
   const userId = req.params.id;
   mongo.getUserExpenses(userId, result => {
@@ -57,49 +65,11 @@ app.delete("/delete/:expid/:userid", (req, res) => {
   let userID = req.params.userid;
   console.log("expenseID", expenseID);
   console.log("userID", userID);
-  res.send("HI");
-  // mongo.deleteExpense(expenseID, result => {
-  //   res.json(result);
-  // });
+  // res.send("HI");
+  mongo.deleteExpense(expenseID, userID, result => {
+    res.json(result);
+  });
 });
-
-// app.put("/update/:id", (req, res) => {
-
-//   let expenseID = req.params.id;
-//   mongo.updateExpense(expenseID, req.body,result => {
-//     res.json(result);
-//   });
-// });
-
-// app.delete("/delete/:id", function(req, res) {
-//   let expenseID = req.params.id;
-//   mongo.deleteExpense(expenseID, result => {
-//     res.json(result);
-//   });
-// });
-
-// app.delete("/expenses/:id", (req, res) => {
-//   let expenseID = req.params.id;
-//   mongo.deleteExpense(expenseID, result => {
-//     console.log('RESULT FROM DELETE SERVER', result)
-//     res.json(result);
-//   });
-// });
-
-//   let repo = req.params.id;
-//   // console.log(repo);
-//   mongo.updateRepo(repo, result => {
-//     res.json(result);
-//   });
-// });
-
-// app.delete("/delete/:id", function(req, res) {
-//   let repoId = req.params.id;
-//   // console.log(repoId);
-//   mongo.deleteRepo(repoId, result => {
-//     res.json(result);
-//   });
-// });
 
 const path = require("path");
 // Serve static files from the React frontend app

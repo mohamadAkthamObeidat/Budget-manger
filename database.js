@@ -69,15 +69,22 @@ const createExpenses = (data, cb) => {
     if (err) {
       return cb(err);
     }
-    User.findOne({ _id: data.user_id }).exec((err, user) => {
-      console.log("USER FROM CREATE EXPENSES", user);
-      if (err) {
-        return cb(err);
-      }
-      user.expenses.push(newExpense._id);
-      user.save();
-      cb(user);
-    });
+    User.findOne({ _id: data.user_id })
+      .populate("expenses")
+      .exec((err, user) => {
+        console.log("USER FROM CREATE EXPENSES", user);
+        if (err) {
+          return cb(err);
+        }
+        user.expenses.push(newExpense._id);
+        if (user.balance >= data.value) user.balance -= data.value;
+        else user.saving -= data.value;
+        user.save(err => {
+          if (err) return cb(err);
+          getUserExpenses(data.user_id, cb);
+        });
+        // cb(user);
+      });
   });
 };
 
@@ -100,34 +107,36 @@ const addSalary = (user_id, cb) => {
   });
 };
 
-// const deleteExpense = (expID, cb) => {
-//   expenses.deleteOne({ _id: expID }, (err, data) => {
-//     if (err) return cb(err);
-//     console.log(data);
-//     cb(data);
-//   });
-// };
-
-// const getExpenses = (expenseID, callBack) => {
-//   Expenses.find({ _id: expenseID }, (error, result) => {
-//     console.log('GET EXPENSES RESULT DB', result)
-//     if (error) {
-//       callBack(error);
-//     } else {
-//       callBack(result);
-//     }
-//   })
-// };
-
-const deleteExpense = (expenseID, callBack) => {
-  Expenses.deleteOne({ _id: expenseID }, (error, response) => {
-    console.log("RESPONSE FROM DELETE DB", response);
-    if (error) {
-      callBack(error);
-    } else {
-      callBack(response);
-    }
+const deleteExpense = (expID, userID, cb) => {
+  Expenses.findOneAndDelete({ _id: expID }, (err, data) => {
+    if (err) return cb(err);
+    console.log(data);
+    User.findOne({ _id: userID }).exec((err, user) => {
+      if (err) return cb(err);
+      const delIndex = user.expenses.indexOf(expID);
+      user.expenses.splice(delIndex, 1);
+      user.balance += data.value;
+      user.save(err => {
+        if (err) return cb(err);
+        getUserExpenses(userID, cb);
+      });
+    });
+    // cb(data);
   });
+};
+
+const search = (data, cb) => {
+  User.findOne({ _id: data.id })
+    .populate("expenses")
+    .exec((err, user) => {
+      if (err) return cb(err);
+      const filterArray = user.expenses.filter(exp => {
+        let query = new RegExp(data.term, "g");
+        return query.test(exp.title);
+      });
+      console.log(filterArray);
+      cb(filterArray);
+    });
 };
 
 const putSalary = (balance, cb) => {
@@ -146,5 +155,6 @@ module.exports = {
   getUserExpenses,
   putSalary,
   addSalary,
-  deleteExpense
+  deleteExpense,
+  search
 };

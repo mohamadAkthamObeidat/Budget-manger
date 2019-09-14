@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../../Style/Row.css";
+import moment from "moment";
 import PaymentModal from "./PaymentModal";
 
 export class Row extends Component {
@@ -43,16 +44,16 @@ export class Row extends Component {
 
   //Delete Specific Expense.
   handleDelete = event => {
-    event.preventDefault();
+    // event.preventDefault();
     console.log(this.props);
-    this.props.remove(this.props.expenses._id, this.props.user);
+    this.props.remove(this.props.expenses._id);
   };
 
   render() {
     const { expenses } = this.props;
     return (
       <tr>
-        <td>{expenses.date}</td>
+        <td>{moment(expenses.date).format("MMM Do YY")}</td>
         <td>{expenses.title}</td>
         <td>{expenses.value}</td>
         <td>

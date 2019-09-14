@@ -3,6 +3,7 @@ import Sidebar from "./sidebar";
 import "../../Style/Dashboard.css";
 import axios from "axios";
 import Row from "./Row";
+import Search from "../search";
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -21,7 +22,6 @@ export class Dashboard extends Component {
     };
 
     this.userData = this.props.userData;
-    this.data = this.userData[0];
   }
 
   componentWillMount() {
@@ -32,7 +32,7 @@ export class Dashboard extends Component {
   }
 
   componentDidMount() {
-    this.getExpenses();
+    this.userData && this.getExpenses();
   }
 
   //@METHOD GET
@@ -40,10 +40,14 @@ export class Dashboard extends Component {
   getExpenses = () => {
     // this.state.userExpenses.map(expenseID => {
     axios
-      .get(`/expenses/${this.data._id}`)
+      .get(`/expenses/${this.userData[0]._id}`)
       .then(response => {
         console.log("RESPONSE.DATA.EXPENSES :", response.data);
-        this.setState({ expenses: response.data.expenses });
+        this.setState({
+          balance: response.data.balance,
+          saving: response.data.saving,
+          expenses: response.data.expenses
+        });
       })
       .catch(error => {
         console.log("NO DATA FETCHED :", error);
@@ -56,14 +60,20 @@ export class Dashboard extends Component {
   //ADD FUNCTIONALITY WORKS BUT DID NOT RENDER ANY THING AFTER DELETE :(
   addExpenses = (newExpense, clearInputs) => {
     // newExpense.date = Date.now();
+    console.log(this.refs.dateAdded.value);
     newExpense.user_id = this.props.userData[0]._id; //Create New Key In 'newExpense Object' then assign to it The user id that come from "props.userData".
-    console.log("NEW EXPENSE :", newExpense);
+    newExpense.date = this.refs.dateAdded.value;
+    // console.log("NEW EXPENSE :", newExpense);
 
     axios
       .post("/expenses", newExpense)
       .then(response => {
-        console.log("RESPONSE FORM ADD EXPENSES :", response);
-        this.setState({ expenses: response.data.expenses });
+        console.log("RESPONSE FORM ADD EXPENSES :", response.data);
+        this.setState({
+          expenses: response.data.expenses,
+          balance: response.data.balance,
+          saving: response.data.saving
+        });
       })
       .catch(error => {
         console.log("NO DATA FETCHED :", error);
@@ -74,11 +84,11 @@ export class Dashboard extends Component {
   //@METHOD POST
   //Update User Salary
   addSalaryHandler = () => {
-    console.log(this.props.userData[0]._id);
+    // console.log(this.props.userData[0]._id);
     axios
       .post("/salary", { id: this.props.userData[0]._id })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         let x = response.data[0].balance;
         let y = response.data[0].saving;
         this.setState({ balance: x, saving: y });
@@ -92,16 +102,16 @@ export class Dashboard extends Component {
   //Delete Specific Expense From Database.
   //DELETE FUNCTIONALITY WORKS BUT DID NOT RENDER ANY THING AFTER DELETE :(
   deleteExpense = expenseID => {
+    // debugger;
+    const userID = this.props.userData[0]._id;
     axios
       .delete(`/delete/${expenseID}/${userID}`)
       .then(response => {
         console.log("RESULT FROM DELETE REACT", response);
         this.setState({
-          expenses: response.data.expenses
+          expenses: response.data.expenses,
+          balance: response.data.balance
         });
-      })
-      .then(() => {
-        this.getExpenses();
       })
       .catch(error => {
         console.log("NO DATA FETCHED", error);
@@ -132,14 +142,14 @@ export class Dashboard extends Component {
 
   handleAdd = event => {
     event.preventDefault();
-    console.log("asdasd:", this.props);
+    // console.log("asdasd:", this.props);
     this.addExpenses(this.state.newExpense, this.clearInputs);
   };
 
   render() {
-    console.log(this.props.userData);
-    console.log("EXPENSES FROM RENDER", this.state.expenses);
-    console.log("USER EXPENSES FROM RENDER", this.state.userExpenses);
+    // console.log(this.props.userData);
+    // console.log("EXPENSES FROM RENDER", this.state.expenses);
+    // console.log("USER EXPENSES FROM RENDER", this.state.userExpenses);
     const { date, title, value } = this.state.newExpense;
     return (
       <div className="body">
@@ -152,12 +162,12 @@ export class Dashboard extends Component {
           </h2>
           <p className="balance">
             {this.props.userData
-              ? `Current Balance: ${this.props.userData[0].balance} ${this.props.userData[0].currency}`
+              ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
               : ""}
           </p>
           <p className="balance">
             {this.props.userData
-              ? `saving: ${this.props.userData[0].saving} ${this.props.userData[0].currency}`
+              ? `saving: ${this.state.saving} ${this.props.userData[0].currency}`
               : ""}
           </p>
         </div>
@@ -166,10 +176,10 @@ export class Dashboard extends Component {
         <div className="form-container">
           {/* DATE PICKER COMPONENT */}
           <vaadin-date-picker
-            onChange={this.handleChange}
             value={date}
             className="date-picker"
             placeholder="Pick a date"
+            ref="dateAdded"
           ></vaadin-date-picker>
 
           <div className="input-container">
@@ -211,6 +221,7 @@ export class Dashboard extends Component {
         </div>
         {/* End Of Add Expense Form */}
 
+        <Search ID={this.props.userData[0]._id} />
         <div className="add-payment">
           <img src={require("../../Assets/cash.svg")} alt="" />
           <button onClick={this.addSalaryHandler}> Salary Deposit</button>
