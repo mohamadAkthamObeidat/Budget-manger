@@ -100,13 +100,13 @@ const addSalary = (user_id, cb) => {
   });
 };
 
-const deleteExpense = (expID, cb) => {
-  expenses.deleteOne({ _id: expID }, (err, data) => {
-    if (err) return cb(err);
-    console.log(data);
-    cb(data);
-  });
-};
+// const deleteExpense = (expID, cb) => {
+//   expenses.deleteOne({ _id: expID }, (err, data) => {
+//     if (err) return cb(err);
+//     console.log(data);
+//     cb(data);
+//   });
+// };
 
 // const getExpenses = (expenseID, callBack) => {
 //   Expenses.find({ _id: expenseID }, (error, result) => {

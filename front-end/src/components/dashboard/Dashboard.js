@@ -5,8 +5,8 @@ import axios from "axios";
 import Row from "./Row";
 
 export class Dashboard extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       name: "Mohammad Obeidat",
       balance: 0,
@@ -14,11 +14,11 @@ export class Dashboard extends Component {
       expenses: [],
       userExpenses: [],
       newExpense: {
-        date: '',
+        date: "",
         title: "",
-        value: ''
+        value: ""
       }
-    }
+    };
 
     this.userData = this.props.userData;
     this.data = this.userData[0];
@@ -35,11 +35,9 @@ export class Dashboard extends Component {
     this.getExpenses();
   }
 
-
   //@METHOD GET
   //Return All Expenses From Database.
   getExpenses = () => {
-
     // this.state.userExpenses.map(expenseID => {
     axios
       .get(`/expenses/${this.data._id}`)
@@ -53,24 +51,18 @@ export class Dashboard extends Component {
     // })
   };
 
-
-
   //@METHOD POST
   //Add New Expense to Database.
   //ADD FUNCTIONALITY WORKS BUT DID NOT RENDER ANY THING AFTER DELETE :(
   addExpenses = (newExpense, clearInputs) => {
     // newExpense.date = Date.now();
     newExpense.user_id = this.props.userData[0]._id; //Create New Key In 'newExpense Object' then assign to it The user id that come from "props.userData".
-<<<<<<< HEAD
     console.log("NEW EXPENSE :", newExpense);
-=======
-    console.log('NEW EXPENSE :', newExpense);
 
->>>>>>> ad29055b248535f36de6c063d801cff466a7000d
     axios
       .post("/expenses", newExpense)
       .then(response => {
-        console.log('RESPONSE FORM ADD EXPENSES :', response);
+        console.log("RESPONSE FORM ADD EXPENSES :", response);
         this.setState({ expenses: response.data.expenses });
       })
       .catch(error => {
@@ -78,7 +70,6 @@ export class Dashboard extends Component {
       });
     clearInputs();
   };
-
 
   //@METHOD POST
   //Update User Salary
@@ -97,34 +88,25 @@ export class Dashboard extends Component {
       });
   };
 
-
   //@METHOD DELETE
   //Delete Specific Expense From Database.
-<<<<<<< HEAD
-  deleteExpense = (expenseID, userID) => {
-    console.log("delete", expenseID, userID);
-=======
   //DELETE FUNCTIONALITY WORKS BUT DID NOT RENDER ANY THING AFTER DELETE :(
   deleteExpense = expenseID => {
->>>>>>> ad29055b248535f36de6c063d801cff466a7000d
     axios
       .delete(`/delete/${expenseID}/${userID}`)
       .then(response => {
-<<<<<<< HEAD
-        console.log("deleted", response);
-=======
-        console.log('RESULT FROM DELETE REACT', response)
+        console.log("RESULT FROM DELETE REACT", response);
         this.setState({
           expenses: response.data.expenses
         });
->>>>>>> ad29055b248535f36de6c063d801cff466a7000d
       })
-      .then(() => { this.getExpenses() })
+      .then(() => {
+        this.getExpenses();
+      })
       .catch(error => {
         console.log("NO DATA FETCHED", error);
       });
   };
-
 
   //Store Input values In State
   handleChange = event => {
@@ -135,8 +117,6 @@ export class Dashboard extends Component {
       }
     });
   };
-
-
 
   //Clear Input Fields After Adding New Expense.
   clearInputs = () => {
@@ -150,16 +130,11 @@ export class Dashboard extends Component {
     });
   };
 
-
-
-
   handleAdd = event => {
     event.preventDefault();
     console.log("asdasd:", this.props);
     this.addExpenses(this.state.newExpense, this.clearInputs);
   };
-
-
 
   render() {
     console.log(this.props.userData);
@@ -188,65 +163,51 @@ export class Dashboard extends Component {
         </div>
 
         {/* Add Expense Form */}
-<<<<<<< HEAD
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">
+        <div className="form-container">
+          {/* DATE PICKER COMPONENT */}
+          <vaadin-date-picker
+            onChange={this.handleChange}
+            value={date}
+            className="date-picker"
+            placeholder="Pick a date"
+          ></vaadin-date-picker>
+
+          <div className="input-container">
+            <label className="title-label" id="basic-addon1">
               Expense
-            </span>
+            </label>
+            <input
+              onChange={this.handleChange}
+              value={title}
+              type="text"
+              className="form-control"
+              name="title"
+              placeholder="Burger"
+            />
           </div>
-          <input
-            onChange={this.handleChange}
-            value={title}
-            type="text"
-            class="form-control"
-            placeholder="Expense"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-            name="title"
-          />
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">
+
+          <div className="input-container">
+            <label className="title-label" id="basic-addon1">
               value
-            </span>
+            </label>
+            <input
+              onChange={this.handleChange}
+              value={value}
+              type="text"
+              className="form-control"
+              name="value"
+              placeholder="22 JD"
+            />
           </div>
-          <input
-            onChange={this.handleChange}
-            value={value}
-            type="text"
-            class="form-control"
-            placeholder="Username"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-            name="value"
-          />
+
           <button
+            className="add-expense"
             onClick={this.handleAdd}
             type="button"
-            data-toggle="modal"
-            data-target="#exampleModal"
           >
-            Add Expense
+            {" "}
+            Add Expense{" "}
           </button>
-=======
-        <div className="form-container">
-
-          {/* DATE PICKER COMPONENT */}
-          <vaadin-date-picker onChange={this.handleChange} value={date} className='date-picker' placeholder="Pick a date">
-          </vaadin-date-picker>
-
-          <div className="input-container">
-            <label className="title-label" id="basic-addon1">Expense</label>
-            <input onChange={this.handleChange} value={title} type="text" className="form-control" name='title' placeholder='Burger' />
-          </div>
-
-          <div className="input-container">
-            <label className="title-label" id="basic-addon1">value</label>
-            <input onChange={this.handleChange} value={value} type="text" className="form-control" name='value' placeholder='22 JD' />
-          </div>
-
-          <button className='add-expense' onClick={this.handleAdd} type="button"> Add Expense </button>
->>>>>>> ad29055b248535f36de6c063d801cff466a7000d
         </div>
         {/* End Of Add Expense Form */}
 
