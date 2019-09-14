@@ -19,28 +19,25 @@ class SignInForm extends Component {
     let target = e.target;
     let value = target.type === "checkbox" ? target.checked : target.value;
     let name = target.name;
-// to give the name different value equal to the value of the imput field where the user is typing
+// to give the name different value equal to the value of the input field where the user is typing
     this.setState({
       [name]: value
     });
   }
 
-//handle the data entered by the user after submitting it and send it to tghe server
+//handle the data entered by the user after submitting it and send it to the server
   handleSubmit(e) {
     e.preventDefault();
-    console.log("this.state", this.state);
-    axios.post("/ss", this.state).then(response => {
+    axios
+    .post("/ss", this.state)
+    .then(response => {
       this.props.updateUserData(response.data);
-      console.log("Res:", response.data);
       this.props.history.push("/dashboard");
     });
-    console.log("The form was submitted with the following data:");
-    console.log(this.state);
   }
 
   render() {
-    console.log(this.props);
-    // input fields where the user needs to enter his data to signin 
+    // input fields where the user needs to enter his data to sign in 
     return (
       <div className="FormCenter">
         <form
