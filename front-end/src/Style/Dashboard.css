@@ -32,8 +32,10 @@
 }
 .empty{
     position: absolute;
-    top:20%;
-    left: 30%;
+    top:45%;
+    left: 45%;
+    max-width: 300px;
+    max-height: 300px;
 }
 
 table{
@@ -57,11 +59,57 @@ table{
     width: 80%;
 }
 
-.input-group{
+/* .input-group{
     position: absolute;
-    left: 68%;
-    top:25%;
+    left: 90%;
+    top:15%;
     display: flex;
     justify-content: space-between;
     margin: 8px;
+} */
+
+.form-container{
+    width:70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    left: 23%;
+    top:23%;
+    margin:8px;
+    flex-wrap:wrap;
+}
+.input-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.title-label{
+    color:#00900B;
+    margin: 8px 0px 8px 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.form-control{
+    border: 1.5px solid #00900B;
+    color:#00900B;
+    border-radius: 20px;
+    padding:12px;
+    margin: 0 8px 0 8px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.add-expense{
+    border: 1.5px solid #00900B;
+    background-color: #00900B;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding:12px;
+    border-radius: 15px;
+    border-color: #00900B;
+    margin:20px;
+    line-height:0.9rem
+}
+vaadin-date-picker{
+    margin: 0 8px 0 8px;
+    color:#00900B;
 }

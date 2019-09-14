@@ -36,9 +36,9 @@ class SignUpForm extends Component {
   handleSubmit(e) {
     alert("you have successfully signed up");
     e.preventDefault();
-    console.log("Submit", this.state);
-    axios.post("/signUp", this.state).then(response => {
-      console.log("Res:", response.data);
+    axios
+    .post("/signUp", this.state)
+    .then(response => {
       this.props.history.push("/login");
     });
   }

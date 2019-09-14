@@ -4,59 +4,80 @@ import "../../Style/Dashboard.css";
 import axios from "axios";
 import Row from "./Row";
 
-let today = new Date();
-let currentDate =
-  today.getDate() +
-  "-" +
-  parseInt(today.getMonth() + 1) +
-  "-" +
-  today.getFullYear();
-
 export class Dashboard extends Component {
-  state = {
-    name: "Mohammad Obeidat",
-    balance: 0,
-    currency: "JD",
-    expenses: [],
-    newExpense: {
-      date: currentDate,
-      title: "",
-      value: 0
+  constructor(props){
+    super(props)
+    this.state = {
+      name: "Mohammad Obeidat",
+      balance: 0,
+      currency: "JD",
+      expenses: [],
+      userExpenses: [],
+      newExpense: {
+        date: '',
+        title: "",
+        value: ''
+      }
     }
-  };
+
+    this.userData = this.props.userData;
+    this.data = this.userData[0];
+  }
+
+  componentWillMount() {
+    let userData = this.props.userData;
+    if (!userData) return;
+    let data = userData[0];
+    this.setState({ userExpenses: data.expenses });
+  }
+
+  componentDidMount() {
+    this.getExpenses();
+  }
+
 
   //@METHOD GET
   //Return All Expenses From Database.
   getExpenses = () => {
+
+    // this.state.userExpenses.map(expenseID => {
     axios
-      .get(`/expenses/${this.props.userData[0]._id}`)
+      .get(`/expenses/${this.data._id}`)
       .then(response => {
-        console.log("RESPONSE.DATA.EXPENSES :", response.data.expenses);
+        console.log("RESPONSE.DATA.EXPENSES :", response.data);
         this.setState({ expenses: response.data.expenses });
       })
       .catch(error => {
         console.log("NO DATA FETCHED :", error);
       });
+    // })
   };
+
+
 
   //@METHOD POST
   //Add New Expense to Database.
+  //ADD FUNCTIONALITY WORKS BUT DID NOT RENDER ANY THING AFTER DELETE :(
   addExpenses = (newExpense, clearInputs) => {
     // newExpense.date = Date.now();
     newExpense.user_id = this.props.userData[0]._id; //Create New Key In 'newExpense Object' then assign to it The user id that come from "props.userData".
     console.log('NEW EXPENSE :', newExpense);
+
     axios
       .post("/expenses", newExpense)
       .then(response => {
+        console.log('RESPONSE FORM ADD EXPENSES :', response);
         this.setState({ expenses: response.data.expenses });
       })
       .catch(error => {
         console.log("NO DATA FETCHED :", error);
       });
     clearInputs();
-    this.getExpenses();
   };
 
+
+  //@METHOD POST
+  //Update User Salary
   addSalaryHandler = () => {
     console.log(this.props.userData[0]._id);
     axios
@@ -72,45 +93,26 @@ export class Dashboard extends Component {
       });
   };
 
-  //@METHOD PUT
-  //Update Specific Expense.
-  updateExpenses = (expenseID, newData, clearInputs) => {
-    axios
-      .put(`/expenses/${expenseID}`, newData)
-      .then(response => {
-        this.setState({
-          expenses: response.data
-        });
-      })
-      .catch(error => {
-        console.log("NO DATA FETCHED", error);
-      });
-    clearInputs();
-  };
 
   //@METHOD DELETE
   //Delete Specific Expense From Database.
+  //DELETE FUNCTIONALITY WORKS BUT DID NOT RENDER ANY THING AFTER DELETE :(
   deleteExpense = expenseID => {
     axios
       .delete(`/expenses/${expenseID}`)
       .then(response => {
+        console.log('RESULT FROM DELETE REACT', response)
         this.setState({
-          expenses: response.data
+          expenses: response.data.expenses
         });
       })
+      .then(() => { this.getExpenses() })
       .catch(error => {
         console.log("NO DATA FETCHED", error);
       });
   };
 
-  componentDidMount() {
-    let x = this.props.userData;
-    if (!x) return;
-    let b = x[0];
-    this.setState({
-      expenses: b.expenses,
-    });
-  }
+
 
   //Store Input values In State
   handleChange = event => {
@@ -122,16 +124,22 @@ export class Dashboard extends Component {
     });
   };
 
+
+
   //Clear Input Fields After Adding New Expense.
   clearInputs = () => {
     this.setState({
       // Change Value Of Specific Keys in Key inside State.
       newExpense: {
+        date: "",
         title: "",
         value: ""
       }
     });
   };
+
+
+
 
   handleAdd = event => {
     event.preventDefault();
@@ -139,10 +147,13 @@ export class Dashboard extends Component {
     this.addExpenses(this.state.newExpense, this.clearInputs);
   };
 
+
+
   render() {
     console.log(this.props.userData);
-    console.log("state", this.state);
-    const { title, value } = this.state.newExpense;
+    console.log("EXPENSES FROM RENDER", this.state.expenses);
+    console.log("USER EXPENSES FROM RENDER", this.state.userExpenses);
+    const { date, title, value } = this.state.newExpense;
     return (
       <div className="body">
         <Sidebar />
@@ -154,12 +165,12 @@ export class Dashboard extends Component {
           </h2>
           <p className="balance">
             {this.props.userData
-              ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
+              ? `Current Balance: ${this.props.userData[0].balance} ${this.props.userData[0].currency}`
               : ""}
           </p>
           <p className="balance">
             {this.props.userData
-              ? `saving: ${this.state.saving} ${this.props.userData[0].currency}`
+              ? `saving: ${this.props.userData[0].saving} ${this.props.userData[0].currency}`
               : ""}
           </p>
         </div>
@@ -167,18 +178,23 @@ export class Dashboard extends Component {
 
 
         {/* Add Expense Form */}
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Expense</span>
+        <div className="form-container">
+
+          {/* DATE PICKER COMPONENT */}
+          <vaadin-date-picker onChange={this.handleChange} value={date} className='date-picker' placeholder="Pick a date">
+          </vaadin-date-picker>
+
+          <div className="input-container">
+            <label className="title-label" id="basic-addon1">Expense</label>
+            <input onChange={this.handleChange} value={title} type="text" className="form-control" name='title' placeholder='Burger' />
           </div>
-          <input onChange={this.handleChange} value={title} type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name='title' />
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">value</span>
+
+          <div className="input-container">
+            <label className="title-label" id="basic-addon1">value</label>
+            <input onChange={this.handleChange} value={value} type="text" className="form-control" name='value' placeholder='22 JD' />
           </div>
-          <input onChange={this.handleChange} value={value} type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name='value' />
-          <button onClick={this.handleAdd} type="button" data-toggle="modal" data-target="#exampleModal">
-            Add Expense
-          </button>
+
+          <button className='add-expense' onClick={this.handleAdd} type="button"> Add Expense </button>
         </div>
         {/* End Of Add Expense Form */}
 
@@ -186,8 +202,6 @@ export class Dashboard extends Component {
           <img src={require("../../Assets/cash.svg")} alt="" />
           <button onClick={this.addSalaryHandler}>  Salary Deposit</button>
         </div>
-
-
 
         {this.state.expenses.length === 0 ? (
           <img
