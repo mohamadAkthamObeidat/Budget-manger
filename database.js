@@ -55,12 +55,25 @@ let signIn = (userSignIn, cb) => {
   });
 };
 
+const getUserExpenses = (user_id, callBack) => {
+  User.findOne({ _id: user_id })
+    .populate("expenses")
+    .exec((err, user) => {
+      err ? callBack(err) : callBack(user);
+    });
+};
+
 const createExpenses = (data, cb) => {
   const newExpense = new Expenses(data);
   newExpense.save(err => {
-    if (err) return cb(err);
+    if (err) {
+      return cb(err);
+    }
     User.findOne({ _id: data.user_id }).exec((err, user) => {
-      if (err) return cb(err);
+      console.log("USER FROM CREATE EXPENSES", user);
+      if (err) {
+        return cb(err);
+      }
       user.expenses.push(newExpense._id);
       user.save();
       cb(user);
@@ -95,16 +108,29 @@ const deleteExpense = (expID, cb) => {
   });
 };
 
-const getUserExpenses = (user_id, cb) => {
-  User.findOne({ _id: user_id })
-    .populate("expenses")
-    .exec((err, user) => {
-      if (err) return cb(err);
-      cb(user);
-    });
+// const getExpenses = (expenseID, callBack) => {
+//   Expenses.find({ _id: expenseID }, (error, result) => {
+//     console.log('GET EXPENSES RESULT DB', result)
+//     if (error) {
+//       callBack(error);
+//     } else {
+//       callBack(result);
+//     }
+//   })
+// };
+
+const deleteExpense = (expenseID, callBack) => {
+  Expenses.deleteOne({ _id: expenseID }, (error, response) => {
+    console.log("RESPONSE FROM DELETE DB", response);
+    if (error) {
+      callBack(error);
+    } else {
+      callBack(response);
+    }
+  });
 };
 
-const putSalare = (balance, cb) => {
+const putSalary = (balance, cb) => {
   User.update({ _id: balance.id }, { $set: { balance } })
     .newBalance("balance")
     .exec((err, user) => {
@@ -118,9 +144,7 @@ module.exports = {
   getUsers,
   createExpenses,
   getUserExpenses,
-  deleteExpense,
-
-  putSalare,
-
-  addSalary
+  putSalary,
+  addSalary,
+  deleteExpense
 };

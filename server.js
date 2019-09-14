@@ -11,6 +11,7 @@ app.get("/all", (req, res) => {
     res.json(result);
   });
 });
+
 // post the data entered by the user during signup to the data base
 app.post("/signUp", (req, res) => {
   const user = req.body;
@@ -18,6 +19,7 @@ app.post("/signUp", (req, res) => {
     res.json(result);
   });
 });
+
 // post the data entered by the user during the sining in to the data base
 app.post("/ss", (req, res) => {
   const userSignIn = req.body;
@@ -26,9 +28,11 @@ app.post("/ss", (req, res) => {
     res.json(result);
   });
 });
+
 // expenses are sent to the database after being entered by the user
 app.post("/expenses", (req, res) => {
   mongo.createExpenses(req.body, result => {
+    console.log("RESULT FROM POST EXPENSES", result);
     res.send(result);
   });
 });
@@ -40,7 +44,7 @@ app.post("/salary", (req, res) => {
     res.json(result);
   });
 });
-// ?? OBIEDAT
+
 app.get("/expenses/:id", (req, res) => {
   const userId = req.params.id;
   mongo.getUserExpenses(userId, result => {
@@ -70,6 +74,14 @@ app.delete("/delete/:expid/:userid", (req, res) => {
 // app.delete("/delete/:id", function(req, res) {
 //   let expenseID = req.params.id;
 //   mongo.deleteExpense(expenseID, result => {
+//     res.json(result);
+//   });
+// });
+
+// app.delete("/expenses/:id", (req, res) => {
+//   let expenseID = req.params.id;
+//   mongo.deleteExpense(expenseID, result => {
+//     console.log('RESULT FROM DELETE SERVER', result)
 //     res.json(result);
 //   });
 // });
