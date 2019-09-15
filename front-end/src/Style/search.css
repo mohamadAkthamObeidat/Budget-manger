@@ -3,3 +3,23 @@
     top: 1%;
     right: 5%;
 }
+
+.input{
+    border: 1.5px solid #00900B;
+    color:#00900B;
+    border-radius: 20px;
+    padding:12px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.update-btn{
+    border: 1.5px solid #00900B;
+    background-color: #00900B;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding:12px;
+    border-radius: 15px;
+    border-color: #00900B;
+    margin:20px;
+    line-height:0.9rem
+}

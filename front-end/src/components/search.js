@@ -124,7 +124,9 @@ export class Dashboard extends Component {
               onChange={this.handleChange}
               placeholder="Search..."
             />
-            <button onClick={this.submitHandler}>Search</button>
+            <button className="update-btn" onClick={this.submitHandler}>
+              Search
+            </button>
           </form>
         </div>
 
