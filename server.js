@@ -45,6 +45,14 @@ app.post("/salary", (req, res) => {
   });
 });
 
+app.put("/info", (req, res) => {
+  // console.log(req.body);
+  mongo.updateInfo(req.body, result => {
+    console.log("UPDATE INFO server result", result);
+    res.json(result);
+  });
+});
+
 app.post("/search", (req, res) => {
   // console.log(req.body);
   mongo.search(req.body, result => {
@@ -71,6 +79,19 @@ app.delete("/delete/:expid/:userid", (req, res) => {
   });
 });
 
+app.delete("/deletesearch/:expid/:userid/:term/:value", (req, res) => {
+  let expenseID = req.params.expid;
+  let userID = req.params.userid;
+  let term = req.params.term;
+  let value = req.params.value;
+  console.log("expenseID", expenseID);
+  console.log("userID", userID);
+  // res.send("HI");
+  mongo.deleteExpenseSearch(expenseID, userID, term, value, result => {
+    res.json(result);
+  });
+});
+
 const path = require("path");
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, "front-end/build")));
@@ -79,11 +100,11 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/front-end/build/index.html"));
 });
 
-app.post("/settings", (req, res) => {
-  mongo.putSalare(req.body, result => {
-    res.json(result);
-  });
-});
+// app.post("/settings", (req, res) => {
+//   mongo.putSalare(req.body, result => {
+//     res.json(result);
+//   });
+// });
 
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => console.log(`Server listening to ${PORT}`));

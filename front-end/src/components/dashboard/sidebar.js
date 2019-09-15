@@ -7,7 +7,7 @@ const Sidebar = () => {
     <nav className="sidebar">
       <img className="logo" src={require("../../Assets/Logo.svg")} alt="" />
       <li className="items">
-        <Link to="/dashbored">
+        <Link to="/dashboard">
           {" "}
           <img
             className="icons"
@@ -18,14 +18,14 @@ const Sidebar = () => {
         </Link>
       </li>
       <li className="items">
-        <Link to="/account-statement">
+        <Link to="/Search">
           {" "}
           <img
             className="icons"
             src={require("../../Assets/accounting.svg")}
             alt=""
           />
-          <span className="nav-item-txt">Account statement</span>
+          <span className="nav-item-txt">Search</span>
         </Link>
       </li>
       <li className="items">

@@ -1,91 +1,145 @@
 import React, { Component } from "react";
-state = {
-  newValue: {
-    Salary: currentSalary,
-    saving: savingaChinge
+import Sidebar from "./sidebar";
+// import "../Style/Dashboard.css";
+import axios from "axios";
+import "../../Style/Settings.css";
+export class Settings extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "Mohammad Obeidat",
+      balance: 0,
+      currency: "JD",
+      saving: 0,
+      income: 0,
+      expenses: [],
+      userExpenses: [],
+      newExpense: {
+        date: "",
+        title: "",
+        value: ""
+      },
+      term: "text"
+    };
+
+    this.userData = this.props.userData;
   }
-};
 
-salaryChange = salary => {
-  Axios.post('/settings', {balance: salary,balance:saving})
-    .then(res => {
-      console.log(res.data)
-    })
-    .catch(err => console.log(err));
-};
+  componentWillMount() {
+    let userData = this.props.userData;
+    console.log("setting", userData);
+    if (!userData) return;
+    let data = userData[0];
+    this.setState({ userExpenses: data.expenses });
+  }
 
-handleAdd = (e) => {
-  e.preventDefault();
+  componentDidMount() {
+    this.userData && this.getExpenses();
+  }
 
-  const salary = document.getElementById("salary").value;
-  this.salaryChange(salary);
-}
+  //@METHOD GET
+  //Return All Expenses From Database.
+  getExpenses = () => {
+    // this.state.userExpenses.map(expenseID => {
+    axios
+      .get(`/expenses/${this.userData[0]._id}`)
+      .then(response => {
+        console.log("RESPONSE.DATA.EXPENSES :", response.data);
+        this.setState({
+          balance: response.data.balance,
+          income: response.data.income,
+          saving: response.data.saving,
+          expenses: response.data.expenses
+        });
+      })
+      .catch(error => {
+        console.log("NO DATA FETCHED :", error);
+      });
+    // })
+  };
 
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
 
-export default class Settings extends Component {
+  handleUpdate = e => {
+    e.preventDefault();
+    let data = { ...this.state, userID: this.props.userData[0]._id };
+    axios
+      .put("/info", data)
+      .then(response => {
+        console.log("response", response);
+        console.log("SUCCESS");
+        alert("Info Updated successfully");
+      })
+      .catch(error => {
+        console.log("error", error);
+      });
+  };
+
   render() {
-    return <div>
-       <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Edit Your Balance And Saving</h5>
-            </div>
-            <div className="modal-body">
-              {/* <h5>balance</h5> */}
-              {/* <h6 className="date"> </h6> */}
-              <form>
-                <div className="Balance">
-                  <label className="Balance-lbl">balance</label>
-                  <input
-                    name="Balance"
-                    className="inputs"
-                    onChange={this.handleChange}
-                    type="text"
-                    placeholder="salare"
-                    value= {balance}
-                  ></input>
-                </div>
-                <div className="value">
-                  <label className="value-lbl"> Saving</label>
-                  <input
-                    id="salary"
-                    name="value"
-                    className="inputs value-input"
-                    // onChange={this.handleChange}
-                    type="text"
-                    placeholder="0000 JD"
-                    value={value}
-                  ></input>
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Cancle
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={this.handleAdd}
-              >
-                update
-              </button>
-            </div>
+    return (
+      <div className="body">
+        <Sidebar />
+        <div className="user-info">
+          <h2 className="user-name">
+            {this.props.userData
+              ? this.props.userData[0].name
+              : this.props.history.push("/login")}
+          </h2>
+          <p className="balance">
+            {this.props.userData
+              ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
+              : ""}
+          </p>
+          <p className="balance">
+            {this.props.userData
+              ? `saving: ${this.state.saving} ${this.props.userData[0].currency}`
+              : ""}
+          </p>
+        </div>
+        <div className="container">
+          <div>
+            <label className="title-label" id="basic-addon1">
+              Salary
+            </label>
+            <input
+              onChange={this.handleChange}
+              value={this.state.income}
+              type="number"
+              className="form-control"
+              name="income"
+              placeholder="Burger"
+            />
           </div>
+
+          <div>
+            <label className="title-label" id="basic-addon1">
+              Saving
+            </label>
+            <input
+              onChange={this.handleChange}
+              value={this.state.saving}
+              type="number"
+              className="form-control"
+              name="saving"
+              placeholder="22 JD"
+            />
+          </div>
+
+          <button
+            className="add-expense"
+            onClick={this.handleUpdate}
+            type="button"
+          >
+            Update
+          </button>
         </div>
       </div>
-    </div>;
+    );
   }
 }
+
+export default Settings;

@@ -46,7 +46,7 @@ export class Row extends Component {
   handleDelete = event => {
     // event.preventDefault();
     console.log(this.props);
-    this.props.remove(this.props.expenses._id);
+    this.props.remove(this.props.expenses._id, this.props.expenses.value);
   };
 
   render() {

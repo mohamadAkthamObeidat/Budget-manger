@@ -3,7 +3,6 @@ import Sidebar from "./sidebar";
 import "../../Style/Dashboard.css";
 import axios from "axios";
 import Row from "./Row";
-import Search from "../search";
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -101,7 +100,7 @@ export class Dashboard extends Component {
   //@METHOD DELETE
   //Delete Specific Expense From Database.
   //DELETE FUNCTIONALITY WORKS BUT DID NOT RENDER ANY THING AFTER DELETE :(
-  deleteExpense = expenseID => {
+  deleteExpense = (expenseID, value) => {
     // debugger;
     const userID = this.props.userData[0]._id;
     axios
@@ -221,7 +220,6 @@ export class Dashboard extends Component {
         </div>
         {/* End Of Add Expense Form */}
 
-        <Search ID={this.props.userData[0]._id} />
         <div className="add-payment">
           <img src={require("../../Assets/cash.svg")} alt="" />
           <button onClick={this.addSalaryHandler}> Salary Deposit</button>

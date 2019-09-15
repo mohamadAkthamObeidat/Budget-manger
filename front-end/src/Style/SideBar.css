@@ -50,11 +50,6 @@
     left: 35%;
     font-size: 12px;
   }
-
-  li:hover{
-    background-color: #fff;
-    color: #00900B
-  }
   @media screen and (max-width: 700px) {
     .sidebar {
       width: 100%;

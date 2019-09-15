@@ -110,7 +110,7 @@ const addSalary = (user_id, cb) => {
 const deleteExpense = (expID, userID, cb) => {
   Expenses.findOneAndDelete({ _id: expID }, (err, data) => {
     if (err) return cb(err);
-    console.log(data);
+    console.log("USERDATA", data);
     User.findOne({ _id: userID }).exec((err, user) => {
       if (err) return cb(err);
       const delIndex = user.expenses.indexOf(expID);
@@ -119,6 +119,33 @@ const deleteExpense = (expID, userID, cb) => {
       user.save(err => {
         if (err) return cb(err);
         getUserExpenses(userID, cb);
+      });
+    });
+    // cb(data);
+  });
+};
+
+const deleteExpenseSearch = (expID, userID, term, value, cb) => {
+  Expenses.findOneAndDelete({ _id: expID }, (err, data) => {
+    if (err) return cb(err);
+    console.log("USERDATA", data);
+    User.findOne({ _id: userID }).exec((err, user) => {
+      if (err) return cb(err);
+      const delIndex = user.expenses.indexOf(expID);
+      user.expenses.splice(delIndex, 1);
+      console.log("value", value);
+      value = parseInt(value);
+      console.log("value", value);
+      user.balance += value;
+      let data = {
+        id: userID,
+        term: term
+      };
+
+      user.save(err => {
+        if (err) return cb(err);
+        console.log("m7md", user);
+        search(data, cb);
       });
     });
     // cb(data);
@@ -139,22 +166,28 @@ const search = (data, cb) => {
     });
 };
 
-const putSalary = (balance, cb) => {
-  User.update({ _id: balance.id }, { $set: { balance } })
-    .newBalance("balance")
-    .exec((err, user) => {
-      if (err) return cb(err);
-    });
+const updateInfo = (data, callBack) => {
+  User.find({ _id: data.userID }, (error, result) => {
+    if (error) {
+      callBack(error);
+    } else {
+      result[0].income = data.income;
+      result[0].saving = data.saving;
+      result[0].save();
+      callBack(result);
+    }
+  });
 };
 
 module.exports = {
+  updateInfo,
   addUser,
   signIn,
   getUsers,
   createExpenses,
   getUserExpenses,
-  putSalary,
   addSalary,
   deleteExpense,
-  search
+  search,
+  deleteExpenseSearch
 };
