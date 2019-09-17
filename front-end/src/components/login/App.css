@@ -147,3 +147,26 @@
   padding: 2px;
 
 }
+.back-img{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 15px;
+  width: 95%;
+  height: 97%;
+
+}
+.logo{
+  position: absolute;
+  bottom: 43%;
+  left:15%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 7rem;
+}
+.logo1{
+  position: absolute;
+  bottom: 38%;
+  left:13%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 7rem;
+}

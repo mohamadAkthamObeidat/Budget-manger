@@ -21,24 +21,22 @@ class SignUpForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-//event handler to get the data when user the type it 
+  //event handler to get the data when user the type it
   handleChange(e) {
     let target = e.target;
     let value = target.type === "checkbox" ? target.checked : target.value;
     let name = target.name;
 
-  // to give the name different value equal to the value of the imput field where the user is typing
+    // to give the name different value equal to the value of the imput field where the user is typing
     this.setState({
       [name]: value
     });
   }
-//handle the data entered by the user after submitting it and send it to tghe server
+  //handle the data entered by the user after submitting it and send it to tghe server
   handleSubmit(e) {
     alert("you have successfully signed up");
     e.preventDefault();
-    axios
-    .post("/signUp", this.state)
-    .then(response => {
+    axios.post("/signUp", this.state).then(response => {
       this.props.history.push("/login");
     });
   }

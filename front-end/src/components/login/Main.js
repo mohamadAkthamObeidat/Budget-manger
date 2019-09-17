@@ -1,17 +1,24 @@
 import React, { Component } from "react";
-import { Link, NavLink, Switch, Route } from "react-router-dom";
+import { NavLink, Switch, Route } from "react-router-dom";
 import SignUpForm from "./pages/SignUpForm";
 import SignInForm from "./pages/SignInForm";
-
 import "./App.css";
 
 class App extends Component {
   render() {
     return (
       <>
-        <div className="App__Aside"></div>
+        <div className="App__Aside">
+          {" "}
+          <img
+            className="back-img"
+            src={require("../../Assets/Background.jpg")}
+          />{" "}
+          <p className="logo"> Budget </p>
+          <p className="logo1"> Manager </p>
+        </div>
         <div className="App__Form">
-          <div className="PageSwitcher">
+          {/* <div className="PageSwitcher">
             <NavLink
               to="/login"
               activeClassName="PageSwitcher__Item--Active"
@@ -26,7 +33,7 @@ class App extends Component {
             >
               Sign Up
             </NavLink>
-          </div>
+          </div> */}
 
           <div className="FormTitle">
             <NavLink
@@ -35,8 +42,8 @@ class App extends Component {
               className="FormTitle__Link"
             >
               Sign In
-            </NavLink>{" "}
-            or{" "}
+            </NavLink>
+            or
             <NavLink
               to="/sign"
               activeClassName="FormTitle__Link--Active"
@@ -47,7 +54,7 @@ class App extends Component {
           </div>
           <Switch>
             <Route
-              path="/"
+              path="/login"
               render={props => (
                 <SignInForm
                   {...props}
@@ -55,7 +62,15 @@ class App extends Component {
                 />
               )}
             />
-            <Route path="/sign" component={SignUpForm} />
+            <Route
+              path="/sign"
+              render={props => (
+                <SignUpForm
+                  {...props}
+                  updateUserData={this.props.updateUserData}
+                />
+              )}
+            />
           </Switch>
         </div>
       </>
