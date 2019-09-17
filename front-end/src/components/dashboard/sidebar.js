@@ -5,7 +5,11 @@ import "../../Style/SideBar.css";
 const Sidebar = () => {
   return (
     <nav className="sidebar">
-      <img className="logo" src={require("../../Assets/Logo.svg")} alt="" />
+      <li>
+        <img className='logo-img' src={require('../../Assets/Logo.svg')} alt=""/>
+        <br></br>
+        <span className='logo-txt'>Budget Manager</span>
+      </li>
       <li className="items">
         <Link to="/dashboard">
           {" "}
