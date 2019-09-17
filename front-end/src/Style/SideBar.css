@@ -9,6 +9,9 @@
       color: #fff;
       position: absolute;
       left: 20%;
+      margin: 20px;
+      margin-left: 2px;
+      font-size: 20px;
   }
 
   li{
@@ -34,6 +37,8 @@
        left: 2%;
        max-width: 30px;
        max-height: 30px;
+       margin: 15px;
+
    }
   .sidebar li.active {
     background-color: #fff;
@@ -47,7 +52,8 @@
     position: absolute;
     bottom:10%;
     left: 35%;
-    font-size: 12px;
+    font-size: 15px;
+    font-weight: bold;
   }
   @media screen and (max-width: 700px) {
     .sidebar {

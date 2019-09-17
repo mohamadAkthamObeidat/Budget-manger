@@ -20,7 +20,7 @@ class App extends Component {
           </div>
         </div>
         <div className="App__Form">
-          {/* <div className="PageSwitcher">
+          <div className="PageSwitcher">
             <NavLink
               to="/login"
               activeClassName="PageSwitcher__Item--Active"
@@ -35,7 +35,7 @@ class App extends Component {
             >
               Sign Up
             </NavLink>
-          </div> */}
+          </div>
 
           <div className="FormTitle">
             <NavLink

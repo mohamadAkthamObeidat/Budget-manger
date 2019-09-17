@@ -84,48 +84,46 @@ export class Settings extends Component {
       <div className="body">
         <Sidebar />
         <div className="user-info">
-          <h2 className="user-name">
+          <h1 className="user-name">
             {this.props.userData
               ? this.props.userData[0].name
               : this.props.history.push("/login")}
-          </h2>
-          <p className="balance">
+          </h1>
+          <h4 className="balance">
             {this.props.userData
               ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
               : ""}
-          </p>
-          <p className="balance">
+          </h4>
+          <h4 className="balance">
             {this.props.userData
-              ? `saving: ${this.state.saving} ${this.props.userData[0].currency}`
+              ? `Saving: ${this.state.saving} ${this.props.userData[0].currency}`
               : ""}
-          </p>
+          </h4>
         </div>
         <div className="container">
           <div>
-            <label className="title-label" id="basic-addon1">
+            <h5 className="title-label" id="basic-addon1">
               Salary
-            </label>
+            </h5>
             <input
               onChange={this.handleChange}
               value={this.state.income}
               type="number"
               className="form-control"
               name="income"
-              placeholder="Burger"
             />
           </div>
 
           <div>
-            <label className="title-label" id="basic-addon1">
+            <h5 className="title-label" id="basic-addon1">
               Saving
-            </label>
+            </h5>
             <input
               onChange={this.handleChange}
               value={this.state.saving}
               type="number"
               className="form-control"
               name="saving"
-              placeholder="22 JD"
             />
           </div>
 

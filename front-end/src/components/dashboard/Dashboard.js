@@ -154,21 +154,21 @@ export class Dashboard extends Component {
       <div className="body">
         <Sidebar />
         <div className="user-info">
-          <h2 className="user-name">
+          <h1 className="user-name">
             {this.props.userData
               ? this.props.userData[0].name
               : this.props.history.push("/login")}
-          </h2>
-          <p className="balance">
+          </h1>
+          <h4 className="balance">
             {this.props.userData
               ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
               : ""}
-          </p>
-          <p className="balance">
+          </h4>
+          <h4 className="balance">
             {this.props.userData
-              ? `saving: ${this.state.saving} ${this.props.userData[0].currency}`
+              ? `Saving: ${this.state.saving} ${this.props.userData[0].currency}`
               : ""}
-          </p>
+          </h4>
         </div>
 
         {/* Add Expense Form */}
@@ -191,21 +191,21 @@ export class Dashboard extends Component {
               type="text"
               className="form-control"
               name="title"
-              placeholder="Burger"
+              placeholder="Enter the title"
             />
           </div>
 
           <div className="input-container">
             <label className="title-label" id="basic-addon1">
-              value
+              Value
             </label>
             <input
               onChange={this.handleChange}
               value={value}
-              type="text"
+              type="number"
               className="form-control"
               name="value"
-              placeholder="22 JD"
+              placeholder="Enter the value"
             />
           </div>
 

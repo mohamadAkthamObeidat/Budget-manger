@@ -19,7 +19,7 @@ export class Dashboard extends Component {
         title: "",
         value: ""
       },
-      term: "text"
+      term: ""
     };
 
     this.userData = this.props.userData;
@@ -89,6 +89,12 @@ export class Dashboard extends Component {
     });
   };
 
+  emptyHandler = e => {
+    e.preventDefault();
+    this.setState({ ...this.state, term: "" });
+    this.getExpenses();
+  };
+
   render() {
     // console.log(this.props.userData);
     // console.log("EXPENSES FROM RENDER", this.state.expenses);
@@ -98,21 +104,21 @@ export class Dashboard extends Component {
       <div className="body">
         <Sidebar />
         <div className="user-info">
-          <h2 className="user-name">
+          <h1 className="user-name">
             {this.props.userData
               ? this.props.userData[0].name
               : this.props.history.push("/login")}
-          </h2>
-          <p className="balance">
+          </h1>
+          <h4 className="balance">
             {this.props.userData
               ? `Current Balance: ${this.state.balance} ${this.props.userData[0].currency}`
               : ""}
-          </p>
-          <p className="balance">
+          </h4>
+          <h4 className="balance">
             {this.props.userData
-              ? `saving: ${this.state.saving} ${this.props.userData[0].currency}`
+              ? `Saving: ${this.state.saving} ${this.props.userData[0].currency}`
               : ""}
-          </p>
+          </h4>
         </div>
 
         <div className="search">
@@ -123,9 +129,13 @@ export class Dashboard extends Component {
               className="input"
               onChange={this.handleChange}
               placeholder="Search..."
+              value={this.state.term}
             />
             <button className="update-btn" onClick={this.submitHandler}>
               Search
+            </button>
+            <button className="btn btn-danger" onClick={this.emptyHandler}>
+              X
             </button>
           </form>
         </div>
