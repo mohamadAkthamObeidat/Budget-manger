@@ -10,12 +10,14 @@ class App extends Component {
       <>
         <div className="App__Aside">
           {" "}
-          <img
+          {/* <img
             className="back-img"
             src={require("../../Assets/Background.jpg")}
-          />{" "}
-          <p className="logo"> Budget </p>
-          <p className="logo1"> Manager </p>
+          />{" "} */}
+          <div className="title">
+            <p> Budget </p>
+            <p> Manager </p>
+          </div>
         </div>
         <div className="App__Form">
           {/* <div className="PageSwitcher">

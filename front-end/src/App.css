@@ -39,7 +39,15 @@
 }
 
 .App__Aside {
+  background-image: url("../src/Assets/Background.jpg");
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border: 8px solid #00900B;
   width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #00900B;
 }
 
@@ -190,17 +198,14 @@
   height: 97%;
 
 }
-.logo{
-  position: absolute;
-  bottom: 43%;
-  left:15%;
+.title{
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 7rem;
+  font-size:4em
+  
 }
-.logo1{
-  position: absolute;
-  bottom: 38%;
-  left:13%;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 7rem;
+.title > p {
+  margin: 0;
+  text-shadow : 2px 2px 5px #00900B;
+
 }
+
