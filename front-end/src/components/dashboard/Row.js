@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../../Style/Row.css";
 import moment from "moment";
-import PaymentModal from "./PaymentModal";
 
 export class Row extends Component {
   state = {
@@ -32,15 +31,6 @@ export class Row extends Component {
     });
   };
 
-  //Update State Values in 'Dashboard.js' Component.
-  // handleEdit = event => {
-  //   event.preventDefault();
-  //   this.props.edit(
-  //     this.props.expenses._id,
-  //     this.state.newExpense,
-  //     this.clearInputs
-  //   );
-  // };
 
   //Delete Specific Expense.
   handleDelete = event => {
